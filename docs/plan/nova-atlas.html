@@ -1,0 +1,337 @@
+<title>Атлас кампании Nova</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: mission-control atlas — route map on top, then one "flight file" per chapter, then systems. Dark-first. */
+:root {
+  --bg: #0c0f15; --panel: #141922; --panel2: #1b2230; --line: #2a3344;
+  --fg: #e8ebf1; --dim: #97a1b3; --amber: #ffb048; --cyan: #60ced8; --green: #58d68d; --red: #f05454; --violet: #aa8ce6;
+  --display: "Michroma", "Segoe UI", sans-serif; --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #f3f5f8; --panel: #ffffff; --panel2: #eef1f6; --line: #d5dbe5; --fg: #141a24; --dim: #5a6578; --amber: #b8650a; --cyan: #0f7f8a; --green: #1f8a4c; --red: #c0392b; --violet: #6a4fb0; color-scheme: light; } }
+:root[data-theme="light"] { --bg: #f3f5f8; --panel: #ffffff; --panel2: #eef1f6; --line: #d5dbe5; --fg: #141a24; --dim: #5a6578; --amber: #b8650a; --cyan: #0f7f8a; --green: #1f8a4c; --red: #c0392b; --violet: #6a4fb0; color-scheme: light; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--body); margin: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 64px; display: grid; gap: 40px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h1 { font: 400 clamp(26px, 4vw, 40px)/1.15 var(--display); letter-spacing: .02em; }
+h2 { font: 400 20px/1.3 var(--display); letter-spacing: .03em; }
+h3 { font: 600 17px/1.3 var(--body); }
+p { margin: 0; max-width: 72ch; }
+.eyebrow { font: 500 12px var(--mono); text-transform: uppercase; letter-spacing: .14em; color: var(--amber); }
+.lead { color: var(--dim); font-size: 16px; }
+header { display: grid; gap: 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 12px var(--mono); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; color: var(--dim); }
+.chip b { color: var(--fg); font-weight: 500; }
+section { display: grid; gap: 16px; }
+.map { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow-x: auto; }
+.map svg { display: block; width: 100%; min-width: 860px; height: auto; }
+.map text { font-family: var(--mono); }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.step { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 4px; min-width: 0; }
+.step .k { font: 500 11px var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .1em; }
+.step.crew { border-color: color-mix(in srgb, var(--cyan) 45%, var(--line)); }
+.step.probe { border-color: color-mix(in srgb, var(--amber) 45%, var(--line)); }
+.step .t { font-weight: 600; }
+.step .d { color: var(--dim); font-size: 13px; }
+.chapters { display: grid; gap: 18px; }
+.ch { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ch-head { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.badge { font: 400 13px var(--display); color: var(--bg); background: var(--amber); border-radius: 8px; padding: 6px 9px; }
+.ch-head .where { font: 500 12px var(--mono); color: var(--dim); }
+.ch-head .analog { font: 500 12px var(--mono); color: var(--cyan); text-align: right; }
+.ch-body { display: grid; grid-template-columns: 1.1fr 1fr 1fr; }
+.col { padding: 16px 18px; display: grid; gap: 10px; align-content: start; min-width: 0; border-right: 1px solid var(--line); }
+.col:last-child { border-right: 0; }
+.col h4 { margin: 0; font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--dim); }
+ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+li { padding-left: 2px; }
+.site { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 4px; background: var(--panel2); }
+.site .n { font: 500 11px var(--mono); color: var(--cyan); letter-spacing: .08em; }
+.site .nm { font-weight: 600; }
+.site ul { font-size: 14px; }
+.story { border-left: 3px solid var(--violet); padding-left: 10px; color: var(--fg); }
+.story small { display: block; color: var(--dim); font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
+.vote { font-size: 14px; color: var(--dim); }
+.vote b { color: var(--amber); font-weight: 600; }
+.fact { font-size: 13px; color: var(--dim); }
+.fact b { color: var(--fg); font-weight: 500; }
+.role { display: inline-block; font: 500 11px var(--mono); padding: 1px 6px; border-radius: 6px; border: 1px solid var(--line); color: var(--dim); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.card p { color: var(--dim); font-size: 14px; }
+.tbl { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 14px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--dim); }
+tr:last-child td { border-bottom: 0; }
+.ok { color: var(--green); font: 500 12px var(--mono); white-space: nowrap; }
+.wip { color: var(--amber); font: 500 12px var(--mono); white-space: nowrap; }
+.ending { border-top: 3px solid var(--line); }
+.ending.good { border-top-color: var(--green); } .ending.tri { border-top-color: var(--cyan); } .ending.les { border-top-color: var(--red); }
+footer { color: var(--dim); font-size: 13px; display: grid; gap: 6px; }
+@media (max-width: 900px) { .ch-body { grid-template-columns: 1fr; } .col { border-right: 0; border-bottom: 1px solid var(--line); } .col:last-child { border-bottom: 0; } .ch-head { grid-template-columns: auto 1fr; } .ch-head .analog { grid-column: 1 / -1; text-align: left; } }
+@media (prefers-reduced-motion: no-preference) { .pulse { animation: pulse 2.4s ease-in-out infinite; } @keyframes pulse { 50% { opacity: .35; } } }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Architects of Nova · NASA Space Apps 2026 · Space Mission Design Game</div>
+  <h1>Атлас кампании: 7 глав, 6 миров, 12 точек высадки</h1>
+  <p class="lead">Сюжет «Затмение»: солнечная буря выжгла спутники, через 72 часа придёт вторая волна. Экипаж кадетов восстанавливает связь, идёт по следу пропавшего корабля «Нова-1» от орбиты Земли до астероида, раскрывает тайну адмирала Векса и спасает Землю ударом в стиле DART.</p>
+  <div class="chips">
+    <span class="chip"><b>1–4</b> игрока, 4 роли</span>
+    <span class="chip"><b>RU/EN</b></span>
+    <span class="chip">опрос <b>GO / NO-GO</b> перед стартом</span>
+    <span class="chip">живые данные <b>NASA DONKI + NeoWs</b></span>
+    <span class="chip">миссии без «проигрыша»: <b>доп. задачи</b></span>
+  </div>
+</header>
+
+<section aria-labelledby="route">
+  <div class="eyebrow">Маршрут</div>
+  <h2 id="route">От Цитадели до «Эреба»</h2>
+  <p class="lead">Зонд всегда летит первым, экипаж следом — так NASA строит путь Луна → Марс: роботы-разведчики перед людьми. Каждая глава заканчивается подготовкой ракеты экипажа и полётом к двум точкам высадки.</p>
+  <div class="map">
+    <svg viewBox="0 0 1120 330" role="img" aria-label="Маршрут кампании: Цитадель, станция Гало, Луна, Марс, L2, Европа, астероид Эреб">
+      <defs>
+        <radialGradient id="sun" cx="0" cy="50%" r="60%"><stop offset="0" stop-color="var(--amber)" stop-opacity=".55"/><stop offset="1" stop-color="var(--amber)" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect x="0" y="0" width="1120" height="330" fill="var(--panel)"/>
+      <rect x="0" y="0" width="260" height="330" fill="url(#sun)"/>
+      <path d="M70 200 C 180 120, 230 120, 300 170 S 420 250, 480 190 S 600 90, 660 150 S 770 250, 830 180 S 960 100, 1040 160" fill="none" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 6"/>
+      <g>
+        <circle cx="70" cy="200" r="22" fill="var(--panel2)" stroke="var(--amber)" stroke-width="2"/>
+        <text x="70" y="205" text-anchor="middle" font-size="11" fill="var(--amber)">M0</text>
+        <text x="70" y="244" text-anchor="middle" font-size="12" fill="var(--fg)">Цитадель</text>
+        <text x="70" y="260" text-anchor="middle" font-size="11" fill="var(--dim)">ангар · туториал</text>
+      </g>
+      <g>
+        <circle cx="300" cy="170" r="20" fill="#2c5b8f" stroke="var(--cyan)" stroke-width="2"/>
+        <text x="300" y="175" text-anchor="middle" font-size="11" fill="#fff">M1</text>
+        <text x="300" y="214" text-anchor="middle" font-size="12" fill="var(--fg)">Станция «Гало»</text>
+        <text x="300" y="230" text-anchor="middle" font-size="11" fill="var(--dim)">A стыковочный узел</text>
+        <text x="300" y="245" text-anchor="middle" font-size="11" fill="var(--dim)">B солнечная ферма</text>
+      </g>
+      <g>
+        <circle cx="480" cy="190" r="18" fill="#8d8b86" stroke="var(--cyan)" stroke-width="2"/>
+        <text x="480" y="195" text-anchor="middle" font-size="11" fill="#111">M2</text>
+        <text x="480" y="232" text-anchor="middle" font-size="12" fill="var(--fg)">Луна · Шеклтон</text>
+        <text x="480" y="248" text-anchor="middle" font-size="11" fill="var(--dim)">A гребень (Солнце)</text>
+        <text x="480" y="263" text-anchor="middle" font-size="11" fill="var(--dim)">B дно (вечная тень)</text>
+      </g>
+      <g>
+        <circle cx="660" cy="150" r="19" fill="#b5603a" stroke="var(--cyan)" stroke-width="2"/>
+        <text x="660" y="155" text-anchor="middle" font-size="11" fill="#fff">M3</text>
+        <text x="660" y="104" text-anchor="middle" font-size="12" fill="var(--fg)">Марс · Езеро</text>
+        <text x="660" y="88" text-anchor="middle" font-size="11" fill="var(--dim)">A кратер · B лавовая труба</text>
+      </g>
+      <g>
+        <circle cx="830" cy="180" r="14" fill="var(--panel2)" stroke="var(--cyan)" stroke-width="2"/>
+        <circle cx="830" cy="180" r="5" fill="var(--amber)"/>
+        <text x="830" y="218" text-anchor="middle" font-size="12" fill="var(--fg)">L2 · телескоп</text>
+        <text x="830" y="234" text-anchor="middle" font-size="11" fill="var(--dim)">A щит · B зеркало</text>
+        <text x="852" y="170" font-size="11" fill="var(--cyan)">M4</text>
+      </g>
+      <g>
+        <circle cx="955" cy="118" r="34" fill="#c09a74" opacity=".55"/>
+        <circle cx="1000" cy="150" r="12" fill="#d9dfe6" stroke="var(--cyan)" stroke-width="2"/>
+        <text x="1000" y="154" text-anchor="middle" font-size="10" fill="#111">M5</text>
+        <text x="955" y="70" text-anchor="middle" font-size="12" fill="var(--fg)">Европа у Юпитера</text>
+        <text x="955" y="54" text-anchor="middle" font-size="11" fill="var(--dim)">A гейзеры · B ледяной гребень</text>
+      </g>
+      <g>
+        <path d="M1032 152 l10 -6 l12 4 l4 10 l-6 9 l-13 2 l-9 -7 z" fill="#5d564f" stroke="var(--red)" stroke-width="2"/>
+        <text x="1045" y="198" text-anchor="middle" font-size="12" fill="var(--fg)">«Эреб»</text>
+        <text x="1045" y="214" text-anchor="middle" font-size="11" fill="var(--dim)">A маяки · B убежище</text>
+        <text x="1045" y="229" text-anchor="middle" font-size="11" fill="var(--red)">M6 · финал</text>
+      </g>
+      <text x="24" y="30" font-size="11" fill="var(--dim)">ЧЁРТОЧКИ — ПОЛЁТ РАКЕТЫ ЭКИПАЖА · КАЖДЫЙ МИР: ЗОНД → ПОДГОТОВКА → ТОЧКА A → ПРЫЖОК → ТОЧКА B → ДОМОЙ</text>
+      <circle class="pulse" cx="70" cy="200" r="30" fill="none" stroke="var(--amber)" stroke-width="1"/>
+    </svg>
+  </div>
+</section>
+
+<section aria-labelledby="loop">
+  <div class="eyebrow">Как устроена каждая глава</div>
+  <h2 id="loop">Один цикл: от брифинга до раскрытия тайны</h2>
+  <div class="flow">
+    <div class="step"><span class="k">Голограмма</span><span class="t">Брифинг и голосование</span><span class="d">Кейд, Векс, ЭХО, BIP-7. Выбор орбиты, цели или детали меняет миссию.</span></div>
+    <div class="step probe"><span class="k">Ангар · зонд</span><span class="t">Сборка</span><span class="d">Модули со стеллажей, пульт ресурсов, тяжёлые детали вдвоём, срочные поломки с таймером.</span></div>
+    <div class="step probe"><span class="k">Пульт старта</span><span class="t">Опрос GO / NO-GO</span><span class="d">Каждая служба отвечает. NO-GO объясняет причину и как исправить.</span></div>
+    <div class="step probe"><span class="k">Старт → ЦУП</span><span class="t">Полёт зонда</span><span class="d">Кинематограф старта, события орбиты, кооп-пульты четырёх ролей.</span></div>
+    <div class="step crew"><span class="k">Стартовый стол</span><span class="t">Подготовка ракеты</span><span class="d">Заправка (кислород + водород) и погрузка полевого набора.</span></div>
+    <div class="step crew"><span class="k">Мир · точка A</span><span class="t">Высадка</span><span class="d">Задачи по ролям, экранная стрелка ведёт, BIP-7 подсказывает по рации.</span></div>
+    <div class="step crew"><span class="k">Прыжок модуля</span><span class="t">Точка B</span><span class="d">Вторая локация мира с новым испытанием и сюжетной находкой.</span></div>
+    <div class="step"><span class="k">Отчёт</span><span class="t">Раскрытие и разбор</span><span class="d">Цепочка событий, звёзды, урок NASA, ядро памяти, следующий шаг тайны.</span></div>
+  </div>
+</section>
+
+<section aria-labelledby="chapters">
+  <div class="eyebrow">Главы</div>
+  <h2 id="chapters">Полётные файлы</h2>
+  <div class="chapters">
+
+    <article class="ch">
+      <div class="ch-head"><span class="badge">M0</span><div><h3>«Искра» — затмение</h3><div class="where">Цитадель · ангар · туториал</div></div><div class="analog">CubeSat 101 · ISS · DONKI</div></div>
+      <div class="ch-body">
+        <div class="col"><h4>Зонд и решения</h4>
+          <ul><li>Кубсат 3U: компьютер, батарея, панели, антенна</li><li>Голосование: камера или датчик радиации</li><li>Ракета Kestrel: масса ≤ 3 кг, обтекатель</li><li>Ops: выход на орбиту, тень, вспышка, связь (пульт связиста)</li></ul>
+          <p class="vote">Обучение: стрелка от персонажа, пульт ресурсов, карточка модуля, BIP-7 по рации.</p></div>
+        <div class="col"><h4>Хук</h4>
+          <div class="story"><small>Холодное открытие</small>Сирена, красный свет, Кейд в помехах: «Мы потеряли все колонии. Вторая волна — через 72 часа».</div>
+          <div class="story"><small>Раскрытие</small>После связи ЭХО ловит частоту «Нова-1» с южного полюса Луны. Векс: «Это эхо. Забудьте».</div></div>
+        <div class="col"><h4>Наука NASA</h4>
+          <p class="fact"><b>1U = 10 см, ~1,33 кг</b>; запас ≥ 10 % по массе и энергии.</p>
+          <p class="fact"><b>Виток ~90 мин</b>, до трети в тени: работают только батареи.</p>
+          <p class="fact">Доска «Космическая погода»: <b>живые вспышки DONKI</b>.</p></div>
+      </div>
+    </article>
+
+    <article class="ch">
+      <div class="ch-head"><span class="badge">M1</span><div><h3>«Маяк» — сеть связи</h3><div class="where">Низкая орбита · станция «Гало»</div></div><div class="analog">TDRS · SCaN · Mission Design Lab</div></div>
+      <div class="ch-body">
+        <div class="col"><h4>Зонд и решения</h4>
+          <ul><li>Голосование: один спутник на GEO или рой из трёх</li><li>GEO: большая антенна, ракета дороже</li><li>Рой: дешевле, но три копии</li><li>Ops: обломки — Командир + Связь вместе</li></ul></div>
+        <div class="col"><h4>Высадка</h4>
+          <div class="site"><span class="n">ТОЧКА A · СТЫКОВОЧНЫЙ УЗЕЛ</span><ul><li>Навести 3 антенны <span class="role">Связь ×2</span></li><li>Синхронный ретранслятор</li></ul></div>
+          <div class="site"><span class="n">ТОЧКА B · СОЛНЕЧНАЯ ФЕРМА</span><ul><li>Развернуть 2 рулонные панели (как iROSA на МКС) <span class="role">Инженер</span></li><li>Скачать журнал «Нова-1» <span class="role">Связь</span></li></ul></div></div>
+        <div class="col"><h4>Сюжет и наука</h4>
+          <div class="story"><small>Раскрытие</small>Журнал «Нова-1»: защиту от радиации сняли ради экономии. Векс: «Удача кончается».</div>
+          <p class="fact"><b>GEO — 35 786 км</b>: спутник висит над одной точкой.</p>
+          <p class="fact">Правильных архитектур <b>несколько</b> — разбор показывает обе.</p></div>
+      </div>
+    </article>
+
+    <article class="ch">
+      <div class="ch-head"><span class="badge">M2</span><div><h3>«Ледяной пророк» — лёд в вечной тени</h3><div class="where">Луна · кратер Шеклтон</div></div><div class="analog">LCROSS · LRO · Artemis</div></div>
+      <div class="ch-body">
+        <div class="col"><h4>Зонд и решения</h4>
+          <ul><li>Полярная орбита и нейтронный спектрометр</li><li>Камера в тени слепа — ловушка для невнимательных</li><li>Голосование: кратер Кабеус или Шеклтон</li></ul></div>
+        <div class="col"><h4>Высадка</h4>
+          <div class="site"><span class="n">ТОЧКА A · ГРЕБЕНЬ (СОЛНЦЕ)</span><ul><li>Сканировать 3 точки <span class="role">Учёный</span></li><li>Донести 3 образца к модулю</li><li>Починить нагреватель <span class="role">Инженер</span></li></ul></div>
+          <div class="site"><span class="n">ТОЧКА B · ДНО КРАТЕРА (−240 °C)</span><ul><li>Найти лёд нейтронным сканером <span class="role">Учёный</span></li><li>Пробурить ледяной керн <span class="role">Инженер</span></li><li>Прожекторы — единственный свет; маяк «Нова-1»</li></ul></div></div>
+        <div class="col"><h4>Сюжет и наука</h4>
+          <div class="story"><small>Раскрытие</small>Запись «Нова-1»: «Мы живы. Уходим к Марсу». Кейд: «Значит, ищем».</div>
+          <p class="fact"><b>2009: LCROSS</b> нашёл водяной лёд в кратере Кабеус.</p>
+          <p class="fact">Вода — <b>топливо и воздух</b> для баз Artemis.</p></div>
+      </div>
+    </article>
+
+    <article class="ch">
+      <div class="ch-head"><span class="badge">M3</span><div><h3>«Семь минут ужаса» — посадка на Марс</h3><div class="where">Марс · кратер Езеро</div></div><div class="analog">Perseverance · Mars Sample Return</div></div>
+      <div class="ch-body">
+        <div class="col"><h4>Зонд и решения</h4>
+          <ul><li>Комплект посадки: щит, парашют, небесный кран</li><li>Панели или РИТЭГ (пыль закрывает панели)</li><li>Голосование: дельта (наука) или равнина (+запас)</li><li>Ops: этапы посадки строго по порядку</li></ul></div>
+        <div class="col"><h4>Высадка</h4>
+          <div class="site"><span class="n">ТОЧКА A · КРАТЕР</span><ul><li>Очистить 3 панели ровера</li><li>Нести РИТЭГ вдвоём, держа баланс</li><li>Пылевая буря: добежать в укрытие по таймеру</li></ul></div>
+          <div class="site"><span class="n">ТОЧКА B · ЛАВОВАЯ ТРУБА</span><ul><li>Собрать пробирки с образцами в тайник</li><li>Включить питание базы «Нова-1» <span class="role">Инженер</span></li></ul></div></div>
+        <div class="col"><h4>Сюжет и наука</h4>
+          <div class="story"><small>Раскрытие</small>Журнал базы: «Видели объект у L2. Векс приказал молчать».</div>
+          <p class="fact">Сигнал до Марса <b>3–22 минуты</b>: садиться приходится автоматически.</p>
+          <p class="fact">Perseverance оставил <b>пробирки</b> для будущей доставки.</p></div>
+      </div>
+    </article>
+
+    <article class="ch">
+      <div class="ch-head"><span class="badge">M4</span><div><h3>«Глаз бездны» — телескоп в L2</h3><div class="where">Точка Лагранжа L2 · 1,5 млн км</div></div><div class="analog">James Webb Space Telescope</div></div>
+      <div class="ch-body">
+        <div class="col"><h4>Зонд и решения</h4>
+          <ul><li>Складное зеркало (петли = риск) или цельное (нужен широкий обтекатель)</li><li>Голосование: своё зеркало или зеркало Векса</li><li>Ops: раскрытие — все четверо в одну секунду</li></ul></div>
+        <div class="col"><h4>Высадка</h4>
+          <div class="site"><span class="n">ТОЧКА A · СОЛНЕЧНЫЙ ЩИТ</span><ul><li>Снять 4 фиксатора по порядку</li><li>Заплатка на слой щита</li><li>Синхронное раскрытие</li></ul></div>
+          <div class="site"><span class="n">ТОЧКА B · ЗЕРКАЛЬНАЯ ПАЛУБА</span><ul><li>Выровнять 3 сегмента одновременно</li><li>Настроить датчик наведения <span class="role">Связь</span></li></ul></div></div>
+        <div class="col"><h4>Сюжет и наука</h4>
+          <div class="story"><small>Поворот</small>Первый свет: астероид «Эреб» летит к Земле. Векс признаётся: скрыл ради «спокойствия рынка».</div>
+          <p class="fact">Зеркало JWST — <b>6,5 м, 18 сегментов</b>; щит из 5 слоёв.</p></div>
+      </div>
+    </article>
+
+    <article class="ch">
+      <div class="ch-head"><span class="badge">M5</span><div><h3>«Сквозь лёд» — к Европе</h3><div class="where">Европа · спутник Юпитера</div></div><div class="analog">Europa Clipper · Juno · DSN</div></div>
+      <div class="ch-body">
+        <div class="col"><h4>Зонд и решения</h4>
+          <ul><li>Энергия вдали от Солнца: гигантские панели или РИТЭГ</li><li>Радиационный «сейф» для электроники</li><li>Голосование: прямой путь или гравманёвр</li><li>Ops: передача сигнала между станциями</li></ul></div>
+        <div class="col"><h4>Высадка</h4>
+          <div class="site"><span class="n">ТОЧКА A · ПОЛЕ ГЕЙЗЕРОВ</span><ul><li>Взять пробы 3 гейзеров в окно извержения</li><li>Установить маяк-ретранслятор</li><li>Радиационное укрытие по таймеру</li></ul></div>
+          <div class="site"><span class="n">ТОЧКА B · ЛЕДЯНОЙ ГРЕБЕНЬ</span><ul><li>Откалибровать 2 мачты ледового радара <span class="role">Связь</span></li><li>Скачать журнал капсулы «Нова-1» <span class="role">Инженер</span></li></ul></div></div>
+        <div class="col"><h4>Сюжет и наука</h4>
+          <div class="story"><small>Раскрытие</small>Экипаж «Нова-1» жив — в анабиозе на «Эребе». Один выстрел: спасти Землю и их.</div>
+          <p class="fact">У Юпитера света <b>в ~25 раз меньше</b> (закон 1/r²).</p></div>
+      </div>
+    </article>
+
+    <article class="ch">
+      <div class="ch-head"><span class="badge">M6</span><div><h3>«Молот» — отвести «Эреб»</h3><div class="where">Астероид «Эреб» · почти невесомость</div></div><div class="analog">DART · Planetary Defense · NeoWs</div></div>
+      <div class="ch-body">
+        <div class="col"><h4>Зонд и решения</h4>
+          <ul><li>Ударник побольше или ранний перехват</li><li>Голосование: блок наведения Векса (дёшево) или свой</li><li>Выбор влияет на концовку</li></ul></div>
+        <div class="col"><h4>Высадка</h4>
+          <div class="site"><span class="n">ТОЧКА A · МАЯКИ</span><ul><li>Расставить 3 маяка наведения при низкой гравитации</li><li>Навести антенну <span class="role">Связь</span></li><li>Финальная синхронизация</li></ul></div>
+          <div class="site"><span class="n">ТОЧКА B · УБЕЖИЩЕ «НОВА-1»</span><ul><li>Подать питание <span class="role">Инженер</span></li><li>Разбудить 4 капсулы в одну секунду</li></ul></div></div>
+        <div class="col"><h4>Финал</h4>
+          <div class="story"><small>Голограмма</small>Удар! Орбита сдвинута, экипаж спасён. Векс: «Решайте, кадеты».</div>
+          <p class="fact">2022: <b>DART</b> сократил виток Диморфа на 32 минуты.</p></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section aria-labelledby="endings">
+  <div class="eyebrow">Концовки</div>
+  <h2 id="endings">Три финала зависят от решений команды</h2>
+  <div class="grid2">
+    <div class="card ending good"><h3>Векс возвращается в Академию</h3><p>Команда ни разу не взяла деталь Векса и выбрала примирение. Теперь он учит кадетов никогда не резать запас.</p></div>
+    <div class="card ending tri"><h3>Векс предстаёт перед судом</h3><p>Чистая кампания и выбор «суд». Правда о «Нова-1» становится известна всем.</p></div>
+    <div class="card ending les"><h3>Земля спасена — чудом</h3><p>Хоть одна деталь Векса на борту. Миссия удалась на грани: урок про запас.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="systems">
+  <div class="eyebrow">Системы, которые работают во всех главах</div>
+  <h2 id="systems">Почему игроку не скучно и всё понятно</h2>
+  <div class="grid2">
+    <div class="card"><h3>Четыре роли</h3><p>Командир (старт, резерв бюджета), Инженер (установка, ремонт ×2), Учёный (видит скрытое), Связист (ракета, орбита, ранние тревоги). Одному игроку помогает BIP-7.</p></div>
+    <div class="card"><h3>Ресурсы как в задании трека</h3><p>Масса, энергия, бюджет, данные, связь, время. Пульт ресурсов в ангаре, полоска сверху, карточка модуля с эффектом на ракету.</p></div>
+    <div class="card"><h3>Опрос GO / NO-GO</h3><p>Как в центре управления NASA: перед стартом каждая служба отвечает. Ошибку видно и объясняют до полёта, а не после.</p></div>
+    <div class="card"><h3>Нет «миссия провалена»</h3><p>Неудача добавляет задачи улучшения и подсказку NASA. Повторный полёт с исправленной конструкцией.</p></div>
+    <div class="card"><h3>Кооп-напряжение</h3><p>Тяжёлые детали вдвоём с балансом, срочные поломки с таймером, синхронные нажатия, голосования с решающим голосом Командира.</p></div>
+    <div class="card"><h3>Прогресс</h3><p>Ранги CML-1…5 (уровни зрелости концепции JPL), звёзды, достижения, кредиты, магазин Грока, тренажёр невесомости, три сложности.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="status">
+  <div class="eyebrow">Статус</div>
+  <h2 id="status">Что уже в игре</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Элемент</th><th>Где</th><th>Статус</th></tr></thead>
+    <tbody>
+      <tr><td>Новый сюжет «Затмение»: холодное открытие, тайна «Нова-1», 3 концовки</td><td>Data.Story, Shared.StringsStory, MissionService.coldOpen</td><td class="ok">в игре</td></tr>
+      <tr><td>Две точки высадки в каждом из 6 миров + прыжок модуля</td><td>Locations.*.SiteB, ExpeditionService</td><td class="ok">в игре</td></tr>
+      <tr><td>Подготовка ракеты экипажа: заправка и груз</td><td>CrewPad.Prep, ExpeditionService</td><td class="ok">в игре</td></tr>
+      <tr><td>Опрос GO / NO-GO, плавный старт ракеты синхронно с отсчётом</td><td>MissionService, HangarService, Hud, Cinema</td><td class="ok">в игре</td></tr>
+      <tr><td>Экранная стрелка от персонажа, пульт ресурсов на полу, таблички стеллажей, карточка модуля</td><td>World, NovaClient, Hud</td><td class="ok">в игре</td></tr>
+      <tr><td>Музыка, атмосфера по локациям, настройки громкости и тряски</td><td>Audio, Hud (настройки)</td><td class="ok">в игре</td></tr>
+      <tr><td>Папка миссии NASA (клавиша N) и список источников</td><td>Data.NasaFiles, docs/NASA_SOURCES.md</td><td class="ok">в игре</td></tr>
+      <tr><td>Мини-игры ремонта по смыслу поломки: провода, трубы, настройка сигнала, калибровка, аудит бюджета</td><td>MiniGameService, NovaClient.MiniGame</td><td class="ok">в игре</td></tr>
+      <tr><td>Свой звук у каждой поломки (в точке поломки), без бесконечной тревоги</td><td>World (fault sounds)</td><td class="ok">в игре</td></tr>
+      <tr><td>NO-GO с точными числами и красная стрелка к нужному стеллажу; стрелки в трёх первых актах</td><td>MissionService.readinessPoll, World</td><td class="ok">в игре</td></tr>
+      <tr><td>Для 6–12 лет: награда дня, 3 задания дня, коды, ремкомплект/грант/BIP Турбо за кредиты, пинг V без чата</td><td>ProgressService, World, Hud</td><td class="ok">в игре</td></tr>
+      <tr><td>Новые модели BIP-7, Грока, голограммы, модулей; декор вторых точек и горизонт</td><td>параллельная сессия визуала</td><td class="ok">в игре</td></tr>
+      <tr><td>Магазин без мороженого, понятные баки O₂/H₂O/LOX, корпус зонда M1+ как настоящий спутник</td><td>параллельная сессия визуала</td><td class="ok">в игре</td></tr>
+      <tr><td>Книга деталей: 25 деталей и 4 ракеты — что делает, пример NASA, факт, источник; коллекция с наградами</td><td>Data.PartInfo, NovaClient.Book, киоск PARTS BOOK</td><td class="ok">в игре</td></tr>
+      <tr><td>Ракетная лаборатория: собери 1–3 ступени, настоящая физика тяги и скорости (уравнение Циолковского), 3 уровня</td><td>NovaClient.RocketLab, киоск ROCKET LAB</td><td class="ok">в игре</td></tr>
+      <tr><td>Викторина после каждой миссии (7 вопросов по фактам NASA)</td><td>Data.NasaFiles (quiz), Hud</td><td class="ok">в игре</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>
+  <p>Образовательная игра. Не связана с NASA и не использует логотип NASA. Факты: NASA CubeSat 101, LCROSS, LRO, Perseverance, JWST, Europa Clipper, DART, DONKI, NeoWs.</p>
+  <p>Критерии оценки: Impact, Creativity, Validity, Relevance, Presentation (1–5) — Judging &amp; Awards Guide, spaceappschallenge.org.</p>
+</footer>
+</div>

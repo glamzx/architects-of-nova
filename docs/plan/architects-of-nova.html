@@ -1,0 +1,699 @@
+<title>Architects of Nova</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: mission dossier — narrow reading column, wide "holo-table" panels for sketches */
+:root{
+  --bg:#090B17; --panel:#121630; --panel2:#1A1F42; --line:#2C3364; --fg:#E9E7F2; --dim:#9EA3C7;
+  --amber:#FFB547; --cyan:#5BD6FF; --ok:#5FE3A1; --warn:#FFD25E; --bad:#FF6470; --violet:#A98BFF;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Manrope","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",Consolas,ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(1px 1px at 12% 18%,#fff8 50%,transparent 51%),radial-gradient(1px 1px at 72% 9%,#fff6 50%,transparent 51%),radial-gradient(1.5px 1.5px at 40% 60%,#fff5 50%,transparent 51%),radial-gradient(1px 1px at 88% 44%,#fff7 50%,transparent 51%),radial-gradient(1px 1px at 22% 82%,#fff5 50%,transparent 51%);
+  background-attachment:fixed}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 80px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:clamp(22px,3.2vw,32px);margin-bottom:6px}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+.lead{color:var(--dim);max-width:68ch}
+section{margin-top:72px;display:grid;gap:22px}
+.mono{font-family:var(--f-mono)}
+a{color:var(--cyan)}
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center;margin-top:8px}
+.hero h1{font-size:clamp(34px,6vw,64px);font-weight:800;letter-spacing:-.01em}
+.hero h1 span{color:var(--amber)}
+.hero .sub{font-size:18px;color:var(--dim);margin-top:12px;max-width:52ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{font-family:var(--f-mono);font-size:12.5px;padding:5px 10px;border:1px solid var(--line);border-radius:999px;color:var(--fg);background:var(--panel)}
+.chip b{color:var(--cyan);font-weight:600}
+.toc{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:22px;font-size:14px}
+.toc a{color:var(--dim);text-decoration:none;border-bottom:1px dashed var(--line)}
+.toc a:hover{color:var(--fg)}
+/* panels */
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.alert{border-color:var(--amber);background:linear-gradient(135deg,#2a2210,var(--panel) 60%)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:8px;align-content:start;min-width:0}
+.card .tag{font-family:var(--f-mono);font-size:11.5px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
+.card p,.card li{font-size:14.5px;color:#cfd0e6}
+ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.two-col-list{columns:2;column-gap:28px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}
+.kv dt{color:var(--dim);font-family:var(--f-mono);font-size:12.5px;padding-top:2px}
+.kv dd{margin:0}
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);background:var(--panel2)}
+tr:last-child td{border-bottom:none}
+td b{color:var(--amber);font-weight:600}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.p0{color:var(--bad)} .p1{color:var(--warn)} .p2{color:var(--ok)}
+/* sketches */
+.sketch{background:#0d1126;border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;min-width:0}
+.sketch figcaption{font-size:14px;color:var(--dim)}
+.sketch figcaption b{color:var(--fg);font-family:var(--f-display);font-size:14px;font-weight:700;margin-right:6px}
+.sketch .svgbox{overflow-x:auto}
+.sketch svg{width:100%;min-width:520px;height:auto;display:block}
+figure{margin:0}
+svg text{font-family:var(--f-body)}
+.t{fill:var(--fg);font-size:13px}
+.td{fill:var(--dim);font-size:11px}
+.tm{fill:var(--dim);font-family:var(--f-mono);font-size:10.5px}
+.ta{fill:var(--amber);font-size:13px;font-weight:700}
+.tc{fill:var(--cyan);font-size:12px;font-weight:600}
+.box{fill:var(--panel);stroke:var(--line);stroke-width:1.5}
+.box2{fill:var(--panel2);stroke:var(--line);stroke-width:1.5}
+.hl{fill:none;stroke:var(--amber);stroke-width:2}
+.hc{fill:none;stroke:var(--cyan);stroke-width:2}
+.dash{fill:none;stroke:var(--dim);stroke-width:1.5;stroke-dasharray:5 5}
+.ln{fill:none;stroke:var(--line);stroke-width:1.5}
+.fa{fill:var(--amber)} .fc{fill:var(--cyan)} .fo{fill:var(--ok)} .fw{fill:var(--warn)} .fb{fill:var(--bad)} .fv{fill:var(--violet)} .fbg{fill:var(--bg)} .fdim{fill:var(--line)}
+.arrow{fill:none;stroke:var(--amber);stroke-width:2;marker-end:url(#ah)}
+/* timeline */
+.mission{display:grid;grid-template-columns:120px 1fr;gap:18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+.mission .m-id{font-family:var(--f-display);font-size:30px;font-weight:800;color:var(--amber);line-height:1}
+.mission .m-time{font-family:var(--f-mono);font-size:12px;color:var(--dim);margin-top:8px}
+.mission h3{font-size:19px}
+.mission .row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:10px}
+.mission .row div{font-size:13.5px;color:#cfd0e6;min-width:0}
+.mission .row b{display:block;font-family:var(--f-mono);font-size:11px;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:2px}
+.act{font-family:var(--f-mono);font-size:12px;color:var(--violet);letter-spacing:.12em;text-transform:uppercase;margin-top:6px}
+.role{border-top:3px solid var(--c)}
+.role h3{color:var(--c)}
+.icons{display:flex;flex-wrap:wrap;gap:10px}
+.ic{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:14px}
+.ic i{font-style:normal;font-family:var(--f-mono);font-weight:600;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--c);color:var(--bg);font-size:13px}
+.score{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.score .card h3{font-size:15px}
+.score .card .n{font-family:var(--f-display);font-size:26px;color:var(--amber)}
+footer{margin-top:72px;color:var(--dim);font-size:13px;display:grid;gap:8px}
+footer a{word-break:break-all}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .grid3,.grid4,.score{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mission{grid-template-columns:1fr}
+  .mission .row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two-col-list{columns:1}
+}
+@media (max-width:520px){
+  .grid2,.grid3,.grid4,.score{grid-template-columns:1fr}
+  .mission .row{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .orbit{transform-origin:200px 170px;animation:spin 40s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+}
+</style>
+
+<div class="wrap">
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div>
+    <div class="eyebrow">NASA Space Apps 2026 · Space Mission Design Game · Roblox</div>
+    <h1>ARCHITECTS <span>OF NOVA</span></h1>
+    <p class="sub">Кооперативная космическая опера для 1–4 игроков. Команда кадетов проектирует, запускает и спасает миссии, построенные на реальных данных NASA.</p>
+    <div class="facts">
+      <span class="chip"><b>1–4</b> игрока, кооп</span>
+      <span class="chip"><b>12–18</b> лет</span>
+      <span class="chip"><b>~70</b> мин сюжета</span>
+      <span class="chip"><b>6</b> миссий + пролог</span>
+      <span class="chip"><b>4</b> роли = 4 системы NASA</span>
+      <span class="chip">дедлайн <b>15 ноя, 23:59</b></span>
+    </div>
+    <nav class="toc">
+      <a href="#ip">Star Wars и права</a><a href="#judging">Критерии</a><a href="#story">Сюжет</a><a href="#missions">Миссии</a><a href="#loop">Игровой цикл</a><a href="#sketches">Скетчи</a><a href="#coop">Кооп</a><a href="#mechanics">Механики</a><a href="#ux">Меньше текста</a><a href="#data">Данные NASA</a><a href="#visual">Визуал</a><a href="#skills">Скиллы</a><a href="#roadmap">План на 48 ч</a>
+    </nav>
+  </div>
+  <svg viewBox="0 0 400 340" role="img" aria-label="Схема: станция-академия в центре, вокруг орбиты шести миссий">
+    <defs><radialGradient id="pl" cx="40%" cy="35%"><stop offset="0" stop-color="#5BD6FF"/><stop offset="1" stop-color="#1A1F42"/></radialGradient></defs>
+    <circle cx="200" cy="170" r="150" class="ln"/>
+    <circle cx="200" cy="170" r="110" class="ln"/>
+    <circle cx="200" cy="170" r="70" class="ln"/>
+    <circle cx="200" cy="170" r="38" fill="url(#pl)"/>
+    <text x="200" y="174" text-anchor="middle" class="tm" style="fill:#E9E7F2">ЦИТАДЕЛЬ</text>
+    <g class="orbit">
+      <circle cx="270" cy="170" r="7" class="fa"/><circle cx="200" cy="60" r="7" class="fc"/><circle cx="90" cy="170" r="7" class="fo"/>
+      <circle cx="306" cy="275" r="6" class="fv"/><circle cx="50" cy="170" r="6" class="fw"/><circle cx="200" cy="20" r="6" class="fb"/>
+    </g>
+    <text x="10" y="330" class="tm">M0 Искра → M6 Молот: каждая орбита — новая миссия</text>
+  </svg>
+</header>
+
+<!-- ============ IP ============ -->
+<section id="ip">
+  <div class="panel alert" style="display:grid;gap:12px">
+    <div class="eyebrow">Решение, которое нужно принять первым</div>
+    <h2>Дух Star Wars, но без имён и символов Star Wars</h2>
+    <p>При сдаче проекта команда ставит галочку: «мы не использовали защищённые авторским правом материалы без разрешения». Джедаи, ситхи, световые мечи, Сила, «Звезда смерти», бегущий титр-crawl, музыка и персонажи принадлежат Lucasfilm/Disney. С ними проект рискует снятием с глобального судейства, а в Roblox — удалением через Rights Manager. Логотип NASA («meatball») тоже нельзя ставить без разрешения.</p>
+    <div class="grid2">
+      <div class="card"><div class="tag" style="color:var(--ok)">Берём настроение</div><ul>
+        <li>Галактика далеко-далеко, Академия против Гегемонии</li>
+        <li>Голограммы-брифинги, дроид-напарник, ангар с кораблём</li>
+        <li>Прыжок через гиперпространство как переход между уровнями</li>
+        <li>Мастер-наставник, бывший лучший ученик стал антагонистом</li>
+        <li>Свой «кодекс»: <b style="color:var(--amber)">«Сила — в запасе»</b> (инженерный запас = главная добродетель)</li>
+      </ul></div>
+      <div class="card"><div class="tag" style="color:var(--bad)">Не берём</div><ul>
+        <li>Названия, имена, планеты, корабли, расы из Star Wars</li>
+        <li>Световые мечи и «Силу» как механику</li>
+        <li>Логотип, шрифт, жёлтый титр-crawl, музыку Джона Уильямса</li>
+        <li>Модели из Creator Store, которые копируют X-wing, TIE и т.п.</li>
+        <li>Слово «Star Wars» в названии игры и описании</li>
+      </ul></div>
+    </div>
+    <p class="lead" style="color:var(--fg)">Для судей это ещё и плюс к Creativity: оригинальная вселенная, где «магия» заменена инженерией.</p>
+  </div>
+</section>
+
+<!-- ============ JUDGING ============ -->
+<section id="judging">
+  <div><div class="eyebrow">Как оценивают</div><h2>5 критериев по шкале 1–5 и как мы берём каждый</h2>
+  <p class="lead">Критерии из официального Judging &amp; Awards Guide 2026. Demo для сдачи: видео до 30 секунд или до 7 слайдов, всё на английском.</p></div>
+  <div class="score">
+    <div class="card"><span class="n">Impact</span><h3>Влияние</h3><p>Roblox: десятки миллионов подростков в день. Игра доносит системную инженерию туда, где дети уже проводят время.</p></div>
+    <div class="card"><span class="n">Creativity</span><h3>Оригинальность</h3><p>Полноценная 3D-RPG с кооп-станциями, а не очередной калькулятор масс. Первая такая на Roblox по этому треку.</p></div>
+    <div class="card"><span class="n">Validity</span><h3>Научность</h3><p>Формулы упрощены, но честны: закон 1/r² для солнечных панелей, задержка сигнала, запас массы 10% из CubeSat 101, проверка ракеты.</p></div>
+    <div class="card"><span class="n">Relevance</span><h3>Данные NASA</h3><p>Каждая миссия построена на реальной миссии NASA. Живая космическая погода из NASA DONKI API влияет на игру.</p></div>
+    <div class="card"><span class="n">Presentation</span><h3>Подача</h3><p>Сюжет с антагонистом, трейлер 30 с, слайды. Метим в Best Storytelling и Art &amp; Technology.</p></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Что просит трек</th><th>Где это в игре</th><th>Статус в MVP</th></tr></thead>
+    <tbody>
+      <tr><td>Цель миссии → требования</td><td>Брифинг: карта целей, команда выбирает 1 из 2–3 научных целей</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Дизайн аппарата, приборы</td><td>Ангар: физическая сборка из модулей (структура, питание, батареи, связь, компьютер, ориентация, приборы)</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Ракета и орбита, проверка совместимости</td><td>Стартовый стол: стрелка массы против грузоподъёмности ракеты для выбранной орбиты</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Бюджет, масса, питание, связь, данные, время</td><td>6 голо-шкал над кораблём, всегда видны всем игрокам</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Команда до 4 человек, роли</td><td>Командир, Инженер, Учёный, Связист. Соло: дроид БИП-7 берёт пустые роли</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Симуляция и оценка</td><td>Центр управления: живые операции, события, итоговый разбор с причинами</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Нет единственного правильного ответа</td><td>2–3 рабочих архитектуры на миссию, разный счёт за каждую</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td>Случайные события, сложность, лидерборд, песочница, сравнение проектов</td><td>Карты событий, режимы Кадет/Пилот/Мастер, таблица команд, «Свободный ангар»</td><td><span class="pill p2">P2</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section id="story">
+  <div><div class="eyebrow">Сюжет</div><h2>Тишина над сектором Нова</h2>
+  <p class="lead">Далёкое будущее. Колонии сектора Нова одна за другой замолкают: звезда Нова-Прайм стала нестабильной, а Гегемония адмирала Векса предлагает «быстрые» корабли, которые ломаются. Последняя надежда — Академия Архитекторов и её Архив Первопроходцев: древние записи о миссиях Земли. Это и есть реальные данные NASA. Каждая открытая запись даёт кадетам новую технологию.</p></div>
+
+  <div class="grid3">
+    <div class="card"><div class="act">Акт I · Пробуждение · ~20 мин</div><h3>Кадеты</h3><p>Команда прибывает в Цитадель. Пролог: собрать крошечный кубсат «Искра» и вернуть связь со станцией. Миссия «Маяк» восстанавливает связь с колониями. Первая встреча с Вексом: он смеётся над «лишним запасом».</p></div>
+    <div class="card"><div class="act">Акт II · Тень · ~30 мин</div><h3>Тайна</h3><p>Ледяной зонд на луне, посадка на красную планету, телескоп в глубоком космосе. Телескоп видит правду: Гегемония сдвинула астероид, чтобы «спасти» колонию за деньги. Наставница Кейд раскрывает прошлое Векса: его миссия погибла, потому что он срезал запас.</p></div>
+    <div class="card"><div class="act">Акт III · Молот · ~20 мин</div><h3>Финал</h3><p>Зонд к ледяной луне Эвридике находит источник «Тишины». Финал: отклонить астероид под солнечной бурей, всей командой на всех станциях. Векс предлагает «дешёвую» деталь со скрытым риском. Выбор игроков меняет концовку.</p></div>
+  </div>
+
+  <div class="grid4">
+    <div class="card"><div class="tag">Наставник</div><h3>Мастер Орина Кейд</h3><p>Ветеран-руководитель полётов. Говорит голограммой, одной фразой. Даёт миссии.</p></div>
+    <div class="card"><div class="tag">Напарник</div><h3>Дроид БИП-7</h3><p>Летающий шар. Подсказывает без слов: светится, пищит, рисует стрелки. В соло берёт пустые роли. Кастомизируется.</p></div>
+    <div class="card"><div class="tag">Антагонист</div><h3>Адмирал Сайрус Векс</h3><p>Бывший лучший кадет. Философия: «запас для трусов». Зеркало ошибок игрока. В концовке можно его переубедить.</p></div>
+    <div class="card"><div class="tag">Торговец и Архив</div><h3>Грок и ИИ «ЭХО»</h3><p>Грок продаёт модули и косметику за кредиты миссий. ЭХО хранит голо-экспонаты реальных миссий NASA.</p></div>
+  </div>
+</section>
+
+<!-- ============ MISSIONS ============ -->
+<section id="missions">
+  <div><div class="eyebrow">Карта кампании · ~70 минут</div><h2>Семь миссий, каждая учит одному компромиссу</h2>
+  <p class="lead">Все миссии работают на одних и тех же четырёх системах (ангар, старт, центр управления, разбор). Новая миссия — это новая таблица данных, а не новый код. Так час контента реально собрать за хакатон.</p></div>
+
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 960 170" role="img" aria-label="Таймлайн кампании по минутам">
+    <line x1="30" y1="80" x2="930" y2="80" class="ln"/>
+    <g>
+      <rect x="30" y="68" width="64" height="24" rx="6" class="fdim"/><text x="62" y="84" text-anchor="middle" class="t">M0</text>
+      <rect x="94" y="68" width="103" height="24" rx="6" class="fc" opacity=".85"/><text x="145" y="84" text-anchor="middle" class="t" style="fill:#090B17">M1 Маяк</text>
+      <rect x="197" y="68" width="129" height="24" rx="6" class="fo" opacity=".85"/><text x="261" y="84" text-anchor="middle" class="t" style="fill:#090B17">M2 Ледяной пророк</text>
+      <rect x="326" y="68" width="155" height="24" rx="6" class="fb" opacity=".85"/><text x="403" y="84" text-anchor="middle" class="t" style="fill:#090B17">M3 Семь минут</text>
+      <rect x="481" y="68" width="129" height="24" rx="6" class="fv" opacity=".9"/><text x="545" y="84" text-anchor="middle" class="t" style="fill:#090B17">M4 Глаз бездны</text>
+      <rect x="610" y="68" width="155" height="24" rx="6" class="fw" opacity=".9"/><text x="687" y="84" text-anchor="middle" class="t" style="fill:#090B17">M5 Сквозь лёд</text>
+      <rect x="765" y="68" width="165" height="24" rx="6" class="fa"/><text x="847" y="84" text-anchor="middle" class="t" style="fill:#090B17">M6 Молот</text>
+    </g>
+    <g class="tm"><text x="30" y="112">0</text><text x="90" y="112">5</text><text x="190" y="112">13</text><text x="320" y="112">23</text><text x="475" y="112">35</text><text x="604" y="112">45</text><text x="758" y="112">57</text><text x="905" y="112">70 мин</text></g>
+    <text x="30" y="40" class="act" style="fill:#A98BFF;font-family:'JetBrains Mono',monospace;font-size:11px">АКТ I</text>
+    <text x="330" y="40" style="fill:#A98BFF;font-family:'JetBrains Mono',monospace;font-size:11px">АКТ II</text>
+    <text x="614" y="40" style="fill:#A98BFF;font-family:'JetBrains Mono',monospace;font-size:11px">АКТ III</text>
+    <line x1="326" y1="30" x2="326" y2="130" class="dash"/><line x1="610" y1="30" x2="610" y2="130" class="dash"/>
+    <text x="30" y="150" class="td">Между миссиями: хаб Цитадели (2–3 мин) — магазин Грока, Архив, зеро-G тренажёр, косметика. Он же даёт паузу и социальное время.</text>
+  </svg></div></figure>
+
+  <div class="mission"><div><div class="m-id">M0</div><div class="m-time">5 мин · обучение</div></div><div>
+    <h3>«Искра»: первый кубсат</h3>
+    <div class="row">
+      <div><b>Цель</b>Собрать кубсат 3U и вывести на низкую орбиту ~400 км, вернуть связь со станцией</div>
+      <div><b>Компромисс</b>Бюджет и правило запаса 10% из NASA CubeSat 101: без запаса миссия «ломается» на первом же событии</div>
+      <div><b>Кооп</b>Каждый игрок ставит по одному модулю. Шкалы растут на глазах у всех</div>
+      <div><b>Данные NASA</b>CubeSat 101 (CSLI), орбита МКС: виток ~92 мин</div>
+    </div></div></div>
+
+  <div class="mission"><div><div class="m-id">M1</div><div class="m-time">8 мин</div></div><div>
+    <h3>«Маяк»: связь для колоний</h3>
+    <div class="row">
+      <div><b>Цель</b>Покрыть связью 3 колонии на планете</div>
+      <div><b>Компромисс</b>1 геостационарный спутник (35 786 км, видит треть планеты, нужна большая ракета) или рой низкоорбитальных (дёшево, но много запусков)</div>
+      <div><b>Кооп</b>Связист двигает конусы покрытия на глобусе, Командир держит бюджет. Решают голосованием</div>
+      <div><b>Событие</b>Обломок на орбите: успеть сделать манёвр уклонения (тратит топливо)</div>
+    </div></div></div>
+
+  <div class="mission"><div><div class="m-id">M2</div><div class="m-time">10 мин</div></div><div>
+    <h3>«Ледяной пророк»: лёд в вечной тени</h3>
+    <div class="row">
+      <div><b>Цель</b>Найти водяной лёд в полярных кратерах луны</div>
+      <div><b>Компромисс</b>Камера не видит в вечной тени. Нужен нейтронный спектрометр или радар: тяжелее и прожорливее. Нужна полярная орбита</div>
+      <div><b>Кооп</b>Асимметрия: Учёный видит тепловую карту кратеров, Связист — только сетку орбит. Договориться голосом, какая наклонная орбита пройдёт над целями</div>
+      <div><b>Данные NASA</b>LRO (температуры Diviner), LCROSS 2009: лёд в кратере Кабеус</div>
+    </div></div></div>
+
+  <div class="mission"><div><div class="m-id">M3</div><div class="m-time">12 мин</div></div><div>
+    <h3>«Семь минут ужаса»: посадка на красную планету</h3>
+    <div class="row">
+      <div><b>Цель</b>Посадить ровер и пережить пылевую бурю</div>
+      <div><b>Компромисс</b>Сигнал идёт 3–22 минуты, управлять вживую нельзя. Последовательность посадки программируется заранее. Питание: солнечные панели (дёшево, боятся пыли) или РИТЭГ (~110 Вт, дорого)</div>
+      <div><b>Кооп</b>Каждый отвечает за этап: теплозащита → парашют → сброс щита → двигатели → «небесный кран». Ошибка одного видна в повторе</div>
+      <div><b>Данные NASA</b>Perseverance EDL, атмосфера ~1% земной, Opportunity погиб в буре 2018</div>
+    </div></div></div>
+
+  <div class="mission"><div><div class="m-id">M4</div><div class="m-time">10 мин</div></div><div>
+    <h3>«Глаз бездны»: телескоп в точке L2</h3>
+    <div class="row">
+      <div><b>Цель</b>Доставить телескоп за 1,5 млн км и раскрыть его</div>
+      <div><b>Компромисс</b>Зеркало больше — больше науки, но не влезает под обтекатель ракеты: надо складывать «оригами». Больше шарниров — больше точек отказа</div>
+      <div><b>Кооп</b>Головоломка раскрытия: один держит «инструкцию», трое снимают замки в нужном порядке и в одну секунду</div>
+      <div><b>Данные NASA</b>JWST: зеркало 6,5 м из 18 сегментов, 5 слоёв щита размером с теннисный корт, удар микрометеорита в 2022</div>
+    </div></div></div>
+
+  <div class="mission"><div><div class="m-id">M5</div><div class="m-time">12 мин</div></div><div>
+    <h3>«Сквозь лёд»: к ледяной луне Эвридике</h3>
+    <div class="row">
+      <div><b>Цель</b>Пролететь над гейзерами и найти источник «Тишины»</div>
+      <div><b>Компромисс</b>Свет у газового гиганта ~1/25 земного: огромные панели или РИТЭГ. Радиация: свинцовый «сейф» для электроники добавляет массу. Гравманёвр экономит топливо, но добавляет годы</div>
+      <div><b>Кооп</b>Смена антенн Deep Space Network: три станции на вращающейся Земле, каждый ведёт свою и передаёт сигнал соседу, пока буфер данных не переполнился</div>
+      <div><b>Данные NASA</b>Europa Clipper (панели ~30 м, запуск 2024), Juno, DSN: Голдстоун, Мадрид, Канберра</div>
+    </div></div></div>
+
+  <div class="mission" style="border-color:var(--amber)"><div><div class="m-id">M6</div><div class="m-time">12 мин · финал</div></div><div>
+    <h3>«Молот»: отклонить астероид</h3>
+    <div class="row">
+      <div><b>Цель</b>Изменить орбиту астероида до удара по колонии</div>
+      <div><b>Компромисс</b>Раньше запуск — нужен меньший толчок, но меньше времени на сборку. Тяжелее ударник — сильнее толчок, но нужна ракета мощнее</div>
+      <div><b>Кооп</b>Все 4 станции одновременно под солнечной бурей. Выбор: деталь Векса (дёшево, скрытый риск) или своя</div>
+      <div><b>Данные NASA</b>DART: период Диморфа сократился на ~32 мин. Буря из реальных записей NASA DONKI</div>
+    </div></div></div>
+</section>
+
+<!-- ============ LOOP ============ -->
+<section id="loop">
+  <div><div class="eyebrow">Игровой цикл</div><h2>Брифинг → Сборка → Старт → Операции → Разбор</h2>
+  <p class="lead">Это цикл реальной разработки миссий NASA: от научной потребности к проекту, запуску, эксплуатации и анализу. Провал — часть цикла: от взрыва до повторной сборки меньше 30 секунд.</p></div>
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 960 250" role="img" aria-label="Схема основного игрового цикла">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#FFB547"/></marker></defs>
+    <g>
+      <rect x="20" y="40" width="150" height="90" rx="12" class="box2"/><text x="95" y="72" text-anchor="middle" class="ta">1 · Брифинг</text><text x="95" y="94" text-anchor="middle" class="td">голограмма Кейд, 10 с</text><text x="95" y="112" text-anchor="middle" class="td">выбор научной цели</text>
+      <rect x="210" y="40" width="150" height="90" rx="12" class="box2"/><text x="285" y="72" text-anchor="middle" class="ta">2 · Сборка</text><text x="285" y="94" text-anchor="middle" class="td">ангар, модули руками</text><text x="285" y="112" text-anchor="middle" class="td">6 шкал ресурсов</text>
+      <rect x="400" y="40" width="150" height="90" rx="12" class="box2"/><text x="475" y="72" text-anchor="middle" class="ta">3 · Старт</text><text x="475" y="94" text-anchor="middle" class="td">ракета + орбита</text><text x="475" y="112" text-anchor="middle" class="td">проверка массы, отсчёт</text>
+      <rect x="590" y="40" width="150" height="90" rx="12" class="box2"/><text x="665" y="72" text-anchor="middle" class="ta">4 · Операции</text><text x="665" y="94" text-anchor="middle" class="td">4 станции, события</text><text x="665" y="112" text-anchor="middle" class="td">наука копится</text>
+      <rect x="780" y="40" width="160" height="90" rx="12" class="box2"/><text x="860" y="72" text-anchor="middle" class="ta">5 · Разбор</text><text x="860" y="94" text-anchor="middle" class="td">звёзды и причины</text><text x="860" y="112" text-anchor="middle" class="td">награды, ранг</text>
+    </g>
+    <path d="M170 85 H206" class="arrow"/><path d="M360 85 H396" class="arrow"/><path d="M550 85 H586" class="arrow"/><path d="M740 85 H776" class="arrow"/>
+    <path d="M860 132 C860 210, 300 210, 285 136" class="arrow" style="stroke:#5BD6FF;stroke-dasharray:6 5"/>
+    <text x="560" y="222" text-anchor="middle" class="tc">провал или «хочу больше звёзд» → пересобрать за 30 секунд</text>
+    <path d="M475 132 C475 170, 300 170, 290 136" class="arrow" style="stroke:#FF6470"/>
+    <text x="390" y="176" text-anchor="middle" class="td" style="fill:#FF6470">ракета не тянет → назад в ангар</text>
+  </svg></div></figure>
+</section>
+
+<!-- ============ SKETCHES ============ -->
+<section id="sketches">
+  <div><div class="eyebrow">Скетчи процессов</div><h2>Как это выглядит на экране</h2>
+  <p class="lead">Черновые эскизы для команды и для Roblox Studio. Текста на экране — минимум: иконки, цвета, стрелки, шкалы.</p></div>
+
+  <div class="grid2">
+  <!-- HUB MAP -->
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 520 340" role="img" aria-label="Карта хаба Цитадели сверху">
+    <rect x="0" y="0" width="520" height="340" rx="10" class="fbg"/>
+    <circle cx="260" cy="170" r="58" class="box2"/><text x="260" y="166" text-anchor="middle" class="ta">Атриум</text><text x="260" y="184" text-anchor="middle" class="td">спавн, голо-карта</text>
+    <rect x="30" y="30" width="150" height="100" rx="10" class="box"/><text x="105" y="70" text-anchor="middle" class="t">Ангар</text><text x="105" y="90" text-anchor="middle" class="td">сборка корабля</text>
+    <rect x="340" y="30" width="150" height="100" rx="10" class="box"/><text x="415" y="70" text-anchor="middle" class="t">Центр управления</text><text x="415" y="90" text-anchor="middle" class="td">4 станции</text>
+    <rect x="30" y="210" width="150" height="100" rx="10" class="box"/><text x="105" y="250" text-anchor="middle" class="t">Архив Первопроходцев</text><text x="105" y="270" text-anchor="middle" class="td">3D-модели NASA</text>
+    <rect x="340" y="210" width="150" height="100" rx="10" class="box"/><text x="415" y="250" text-anchor="middle" class="t">Рынок Грока</text><text x="415" y="270" text-anchor="middle" class="td">модули, косметика</text>
+    <rect x="215" y="270" width="90" height="56" rx="8" class="box"/><text x="260" y="294" text-anchor="middle" class="t">Зеро-G</text><text x="260" y="311" text-anchor="middle" class="td">паркур-тренажёр</text>
+    <rect x="215" y="14" width="90" height="56" rx="8" class="box"/><text x="260" y="38" text-anchor="middle" class="t">Стартовый</text><text x="260" y="55" text-anchor="middle" class="td">стол, обзор</text>
+    <path d="M180 80 L210 140 M340 80 L310 140 M180 260 L210 200 M340 260 L310 200 M260 112 V70 M260 228 V270" class="hc"/>
+    <circle cx="225" cy="150" r="5" class="fa"/><circle cx="292" cy="190" r="5" class="fo"/><circle cx="244" cy="200" r="5" class="fv"/><circle cx="282" cy="140" r="5" class="fc"/>
+  </svg></div><figcaption><b>Хаб «Цитадель»</b>Компактный, за 15 секунд от спавна до любой зоны. Светящиеся дорожки ведут к следующей задаче, никаких стрелок-текстов.</figcaption></figure>
+
+  <!-- HANGAR -->
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 520 340" role="img" aria-label="Экран сборки в ангаре с шкалами ресурсов">
+    <rect x="0" y="0" width="520" height="340" rx="10" class="fbg"/>
+    <!-- ship frame -->
+    <rect x="200" y="110" width="120" height="150" rx="8" class="box2"/>
+    <rect x="130" y="150" width="70" height="40" class="hc"/><rect x="320" y="150" width="70" height="40" class="hc"/>
+    <text x="165" y="175" text-anchor="middle" class="tm">панель</text><text x="355" y="175" text-anchor="middle" class="tm">панель</text>
+    <rect x="225" y="130" width="70" height="30" rx="4" class="fc" opacity=".8"/><text x="260" y="150" text-anchor="middle" class="tm" style="fill:#090B17">прибор</text>
+    <rect x="225" y="175" width="70" height="30" rx="4" class="dash"/><text x="260" y="194" text-anchor="middle" class="tm">+ слот</text>
+    <rect x="225" y="220" width="70" height="28" rx="4" class="fo" opacity=".75"/><text x="260" y="239" text-anchor="middle" class="tm" style="fill:#090B17">батарея</text>
+    <path d="M260 110 L245 85 L275 85 Z" class="fa"/><text x="260" y="78" text-anchor="middle" class="tm">антенна</text>
+    <!-- player carrying -->
+    <circle cx="80" cy="270" r="12" class="fv"/><rect x="66" y="282" width="28" height="34" rx="6" class="fv"/>
+    <rect x="96" y="262" width="34" height="22" rx="3" class="fw"/><text x="113" y="300" text-anchor="middle" class="tm">несёт радар</text>
+    <path d="M132 268 C170 250, 200 210, 222 192" class="arrow" style="stroke:#FFD25E"/>
+    <!-- gauges -->
+    <g transform="translate(410,24)">
+      <text x="0" y="0" class="tm">РЕСУРСЫ</text>
+      <g transform="translate(0,14)"><text x="0" y="12" class="td">масса</text><rect x="44" y="2" width="56" height="12" rx="3" class="fdim"/><rect x="44" y="2" width="50" height="12" rx="3" class="fw"/></g>
+      <g transform="translate(0,34)"><text x="0" y="12" class="td">питание</text><rect x="44" y="2" width="56" height="12" rx="3" class="fdim"/><rect x="44" y="2" width="58" height="12" rx="3" class="fb"/></g>
+      <g transform="translate(0,54)"><text x="0" y="12" class="td">бюджет</text><rect x="44" y="2" width="56" height="12" rx="3" class="fdim"/><rect x="44" y="2" width="34" height="12" rx="3" class="fo"/></g>
+      <g transform="translate(0,74)"><text x="0" y="12" class="td">данные</text><rect x="44" y="2" width="56" height="12" rx="3" class="fdim"/><rect x="44" y="2" width="40" height="12" rx="3" class="fo"/></g>
+      <g transform="translate(0,94)"><text x="0" y="12" class="td">связь</text><rect x="44" y="2" width="56" height="12" rx="3" class="fdim"/><rect x="44" y="2" width="28" height="12" rx="3" class="fo"/></g>
+      <g transform="translate(0,114)"><text x="0" y="12" class="td">время</text><rect x="44" y="2" width="56" height="12" rx="3" class="fdim"/><rect x="44" y="2" width="22" height="12" rx="3" class="fo"/></g>
+    </g>
+    <!-- consequence arrows -->
+    <path d="M300 190 C350 120, 380 70, 405 56" class="arrow" style="stroke:#FF6470;stroke-width:1.5"/>
+    <path d="M300 195 C360 140, 380 100, 405 76" class="arrow" style="stroke:#FF6470;stroke-width:1.5"/>
+    <text x="330" y="300" class="td" style="fill:#FF6470">радар в слот → стрелки к «массе» и «питанию»</text>
+    <text x="330" y="316" class="td">питание красное: нужна ещё панель</text>
+  </svg></div><figcaption><b>Ангар: сборка «руками»</b>Модули берут со стеллажей и несут к каркасу, как в Build a Boat. При установке от модуля летят стрелки к шкалам, которые он меняет. Красная шкала пульсирует.</figcaption></figure>
+
+  <!-- LAUNCH CHECK -->
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 520 300" role="img" aria-label="Проверка массы корабля против грузоподъёмности ракеты">
+    <rect x="0" y="0" width="520" height="300" rx="10" class="fbg"/>
+    <g>
+      <rect x="40" y="70" width="40" height="160" rx="18" class="box2"/><path d="M40 90 L60 40 L80 90" class="box2"/><text x="60" y="255" text-anchor="middle" class="t">Искра</text><text x="60" y="272" text-anchor="middle" class="tm">LEO</text>
+      <rect x="120" y="50" width="50" height="180" rx="20" class="box2"/><path d="M120 70 L145 20 L170 70" class="box2"/><text x="145" y="255" text-anchor="middle" class="t">Титан</text><text x="145" y="272" text-anchor="middle" class="tm">LEO · GEO</text>
+      <rect x="205" y="40" width="70" height="190" rx="24" class="box2" style="stroke:#FFB547"/><rect x="190" y="90" width="14" height="140" rx="7" class="box2" style="stroke:#FFB547"/><rect x="276" y="90" width="14" height="140" rx="7" class="box2" style="stroke:#FFB547"/><path d="M205 60 L240 10 L275 60" class="box2" style="stroke:#FFB547"/><text x="240" y="255" text-anchor="middle" class="ta">Колосс</text><text x="240" y="272" text-anchor="middle" class="tm">до дальнего космоса</text>
+    </g>
+    <!-- gauge -->
+    <g transform="translate(400,160)">
+      <path d="M-90 0 A90 90 0 0 1 90 0" fill="none" stroke="#2C3364" stroke-width="16"/>
+      <path d="M-90 0 A90 90 0 0 1 45 -78" fill="none" stroke="#5FE3A1" stroke-width="16"/>
+      <path d="M45 -78 A90 90 0 0 1 72 -54" fill="none" stroke="#FFD25E" stroke-width="16"/>
+      <path d="M72 -54 A90 90 0 0 1 90 0" fill="none" stroke="#FF6470" stroke-width="16"/>
+      <line x1="0" y1="0" x2="38" y2="-70" stroke="#E9E7F2" stroke-width="3"/>
+      <circle r="6" fill="#E9E7F2"/>
+      <text x="0" y="28" text-anchor="middle" class="t">масса корабля / грузоподъёмность</text>
+      <text x="0" y="48" text-anchor="middle" class="tm">зелёный: старт · жёлтый: запас &lt;10% · красный: не взлетит</text>
+    </g>
+  </svg></div><figcaption><b>Старт: проверка ракеты</b>Связист выбирает ракету и орбиту, стрелка показывает, тянет ли она корабль. Чем дальше орбита, тем меньше ракета может вывести. Красный — назад в ангар.</figcaption></figure>
+
+  <!-- MISSION CONTROL -->
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 520 300" role="img" aria-label="Центр управления с четырьмя станциями игроков">
+    <rect x="0" y="0" width="520" height="300" rx="10" class="fbg"/>
+    <rect x="120" y="20" width="280" height="100" rx="10" class="box2"/>
+    <ellipse cx="260" cy="70" rx="90" ry="30" class="hc"/><circle cx="260" cy="70" r="14" class="fc" opacity=".6"/><circle cx="335" cy="58" r="5" class="fa"/>
+    <text x="260" y="112" text-anchor="middle" class="tm">большой экран: орбита + таймлайн событий</text>
+    <g>
+      <rect x="20" y="170" width="110" height="100" rx="10" class="box" style="stroke:#FFB547"/><text x="75" y="200" text-anchor="middle" class="ta">Командир</text><text x="75" y="220" text-anchor="middle" class="td">бюджет, время</text><text x="75" y="236" text-anchor="middle" class="td">голосования</text>
+      <rect x="145" y="170" width="110" height="100" rx="10" class="box" style="stroke:#5FE3A1"/><text x="200" y="200" text-anchor="middle" class="t" style="fill:#5FE3A1;font-weight:700">Инженер</text><text x="200" y="220" text-anchor="middle" class="td">питание, тепло</text><text x="200" y="236" text-anchor="middle" class="td">ремонт</text>
+      <rect x="270" y="170" width="110" height="100" rx="10" class="box" style="stroke:#A98BFF"/><text x="325" y="200" text-anchor="middle" class="t" style="fill:#A98BFF;font-weight:700">Учёный</text><text x="325" y="220" text-anchor="middle" class="td">приборы, цели</text><text x="325" y="236" text-anchor="middle" class="td">данные</text>
+      <rect x="395" y="170" width="110" height="100" rx="10" class="box" style="stroke:#5BD6FF"/><text x="450" y="200" text-anchor="middle" class="tc">Связист</text><text x="450" y="220" text-anchor="middle" class="td">орбита, антенны</text><text x="450" y="236" text-anchor="middle" class="td">окна связи DSN</text>
+    </g>
+    <path d="M200 168 L240 124 M325 168 L285 124 M75 168 L170 124 M450 168 L350 124" class="dash"/>
+    <rect x="356" y="128" width="150" height="26" rx="6" class="fb" opacity=".9"/><text x="431" y="146" text-anchor="middle" class="t" style="fill:#090B17;font-weight:700">⚠ солнечная вспышка</text>
+  </svg></div><figcaption><b>Центр управления</b>Каждый игрок подходит к своей консоли. События требуют действий нескольких станций сразу, как в Overcooked. Над всеми общий экран, поэтому видно, кто тонет.</figcaption></figure>
+
+  <!-- POWER ROUTING -->
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 520 280" role="img" aria-label="Мини-игра распределения энергии по системам">
+    <rect x="0" y="0" width="520" height="280" rx="10" class="fbg"/>
+    <text x="24" y="34" class="ta">⚡ 8 ячеек энергии</text><text x="24" y="54" class="td">на теневой стороне орбиты: 5</text>
+    <g transform="translate(24,80)">
+      <g><text x="0" y="16" class="t">Приборы</text>
+        <rect x="110" y="2" width="30" height="20" rx="4" class="fv"/><rect x="146" y="2" width="30" height="20" rx="4" class="fv"/><rect x="182" y="2" width="30" height="20" rx="4" class="fv"/><rect x="218" y="2" width="30" height="20" rx="4" class="fdim"/></g>
+      <g transform="translate(0,38)"><text x="0" y="16" class="t">Связь</text>
+        <rect x="110" y="2" width="30" height="20" rx="4" class="fc"/><rect x="146" y="2" width="30" height="20" rx="4" class="fc"/><rect x="182" y="2" width="30" height="20" rx="4" class="fdim"/></g>
+      <g transform="translate(0,76)"><text x="0" y="16" class="t">Обогрев</text>
+        <rect x="110" y="2" width="30" height="20" rx="4" class="fa"/><rect x="146" y="2" width="30" height="20" rx="4" class="fdim"/><rect x="182" y="2" width="30" height="20" rx="4" class="fdim"/></g>
+      <g transform="translate(0,114)"><text x="0" y="16" class="t">Компьютер</text>
+        <rect x="110" y="2" width="30" height="20" rx="4" class="fo"/><rect x="146" y="2" width="30" height="20" rx="4" class="fo"/></g>
+    </g>
+    <g transform="translate(330,70)">
+      <rect x="0" y="0" width="170" height="150" rx="10" class="box2"/>
+      <circle cx="85" cy="70" r="40" class="hc"/><path d="M85 30 A40 40 0 0 1 85 110" fill="#121630" stroke="none"/><path d="M85 30 A40 40 0 0 0 85 110" fill="#5BD6FF" opacity=".25"/>
+      <circle cx="125" cy="70" r="6" class="fa"/>
+      <text x="85" y="134" text-anchor="middle" class="td">корабль входит в тень через 0:12</text>
+    </g>
+    <text x="24" y="262" class="td">Обогрев на 1 ячейке в тени → батарея мёрзнет → разряд. Решение: временно снять 1 ячейку с приборов.</text>
+  </svg></div><figcaption><b>Инженер: распределение энергии</b>Механика как в FTL: ячейки энергии перетаскиваются между системами. В тени планеты энергии меньше, и это видно на мини-карте орбиты.</figcaption></figure>
+
+  <!-- DSN -->
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 520 280" role="img" aria-label="Мини-игра передачи сигнала между станциями Deep Space Network">
+    <rect x="0" y="0" width="520" height="280" rx="10" class="fbg"/>
+    <circle cx="150" cy="150" r="70" class="box2"/>
+    <circle cx="150" cy="150" r="70" class="ln"/>
+    <g><circle cx="150" cy="80" r="9" class="fa"/><text x="150" y="66" text-anchor="middle" class="tm">Голдстоун</text>
+       <circle cx="211" cy="185" r="9" class="fc"/><text x="236" y="210" text-anchor="middle" class="tm">Мадрид</text>
+       <circle cx="89" cy="185" r="9" class="fv"/><text x="64" y="210" text-anchor="middle" class="tm">Канберра</text></g>
+    <text x="150" y="155" text-anchor="middle" class="td">Земля вращается</text>
+    <path d="M150 80 L460 40" stroke="#FFB547" stroke-width="2" stroke-dasharray="3 4"/>
+    <circle cx="470" cy="38" r="10" class="fa"/><text x="470" y="66" text-anchor="middle" class="tm">зонд</text>
+    <g transform="translate(300,110)">
+      <text x="0" y="0" class="t">Буфер данных</text>
+      <rect x="0" y="10" width="190" height="18" rx="4" class="fdim"/><rect x="0" y="10" width="150" height="18" rx="4" class="fw"/>
+      <text x="0" y="52" class="td">зонд уходит за горизонт Голдстоуна</text>
+      <text x="0" y="68" class="td">через 0:08 → Мадрид должен поймать</text>
+      <text x="0" y="98" class="t">Задержка сигнала</text>
+      <text x="0" y="118" class="tm">Луна 1,3 с · Марс 3–22 мин · Юпитер 33–53 мин</text>
+    </g>
+  </svg></div><figcaption><b>Связист: смена антенн DSN</b>У каждого игрока своя станция. Пока Земля вращается, сигнал надо передать соседу без разрыва. Чем дальше зонд, тем больше задержка: команды уходят «вслепую».</figcaption></figure>
+
+  <!-- DEBRIEF -->
+  <figure class="sketch" style="grid-column:1/-1"><div class="svgbox">
+  <svg viewBox="0 0 960 300" role="img" aria-label="Экран разбора миссии со звёздами и цепочкой причин">
+    <rect x="0" y="0" width="960" height="300" rx="10" class="fbg"/>
+    <text x="30" y="44" class="ta" style="font-size:18px">РАЗБОР · M3 «Семь минут ужаса»</text>
+    <g transform="translate(30,70)">
+      <path d="M20 0 L26 14 L41 15 L29 25 L33 40 L20 32 L7 40 L11 25 L-1 15 L14 14 Z" class="fa"/>
+      <path transform="translate(50,0)" d="M20 0 L26 14 L41 15 L29 25 L33 40 L20 32 L7 40 L11 25 L-1 15 L14 14 Z" class="fa"/>
+      <path transform="translate(100,0)" d="M20 0 L26 14 L41 15 L29 25 L33 40 L20 32 L7 40 L11 25 L-1 15 L14 14 Z" class="fdim"/>
+    </g>
+    <g transform="translate(30,140)">
+      <text x="0" y="0" class="tm">НАУКА</text><rect x="0" y="8" width="180" height="12" rx="3" class="fdim"/><rect x="0" y="8" width="140" height="12" rx="3" class="fv"/>
+      <text x="0" y="44" class="tm">ЭФФЕКТИВНОСТЬ</text><rect x="0" y="52" width="180" height="12" rx="3" class="fdim"/><rect x="0" y="52" width="110" height="12" rx="3" class="fo"/>
+      <text x="0" y="88" class="tm">КОМАНДА</text><rect x="0" y="96" width="180" height="12" rx="3" class="fdim"/><rect x="0" y="96" width="160" height="12" rx="3" class="fc"/>
+    </g>
+    <text x="300" y="44" class="t">Цепочка причин (анимируется по шагам):</text>
+    <g transform="translate(300,70)">
+      <rect x="0" y="0" width="120" height="60" rx="10" class="box2"/><text x="60" y="26" text-anchor="middle" class="t">🌪 буря</text><text x="60" y="44" text-anchor="middle" class="tm">сол 41</text>
+      <rect x="160" y="0" width="120" height="60" rx="10" class="box2"/><text x="220" y="26" text-anchor="middle" class="t">панели в пыли</text><text x="220" y="44" text-anchor="middle" class="tm">−70% энергии</text>
+      <rect x="320" y="0" width="120" height="60" rx="10" class="box2" style="stroke:#FF6470"/><text x="380" y="26" text-anchor="middle" class="t">обогрев выкл</text><text x="380" y="44" text-anchor="middle" class="tm">−80 °C ночью</text>
+      <rect x="480" y="0" width="140" height="60" rx="10" class="box2" style="stroke:#FF6470"/><text x="550" y="26" text-anchor="middle" class="t" style="fill:#FF6470">батарея мертва</text><text x="550" y="44" text-anchor="middle" class="tm">миссия окончена</text>
+      <path d="M120 30 H156 M280 30 H316 M440 30 H476" class="arrow"/>
+    </g>
+    <g transform="translate(300,170)">
+      <rect x="0" y="0" width="620" height="100" rx="10" class="box"/>
+      <text x="20" y="30" class="tc">Что могло спасти (выбери и попробуй снова):</text>
+      <rect x="20" y="46" width="180" height="36" rx="8" class="box2"/><text x="110" y="69" text-anchor="middle" class="t">РИТЭГ вместо панелей</text>
+      <rect x="215" y="46" width="180" height="36" rx="8" class="box2"/><text x="305" y="69" text-anchor="middle" class="t">+1 батарея (запас)</text>
+      <rect x="410" y="46" width="190" height="36" rx="8" class="box2"/><text x="505" y="69" text-anchor="middle" class="t">Реальность: Opportunity, 2018</text>
+    </g>
+  </svg></div><figcaption><b>Разбор: «почему», а не «правильно/неправильно»</b>Причины показаны цепочкой карточек, а не абзацем текста. Внизу три подсказки, одна из них — реальный случай NASA с похожей судьбой. Это прямо отвечает пункту трека про post-mission analysis.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ COOP ============ -->
+<section id="coop">
+  <div><div class="eyebrow">Кооп</div><h2>Четыре роли, у каждой своя часть правды</h2>
+  <p class="lead">Ни один игрок не видит всю картину. Это заставляет говорить и договариваться, как в Keep Talking and Nobody Explodes. Но каждый ресурс общий, поэтому любой эгоистичный выбор бьёт по всем.</p></div>
+  <div class="grid4">
+    <div class="card role" style="--c:var(--amber)"><div class="tag">Mission Lead</div><h3>Командир</h3><ul><li>Видит бюджет и таймлайн</li><li>Запускает голосования</li><li>Последнее слово при ничьей</li><li>Перк: «экстренный резерв» раз за миссию</li></ul></div>
+    <div class="card role" style="--c:var(--ok)"><div class="tag">Spacecraft</div><h3>Инженер</h3><ul><li>Видит массу, питание, тепло</li><li>Распределяет энергию</li><li>Чинит модули бегом по кораблю</li><li>Перк: ремонт вдвое быстрее</li></ul></div>
+    <div class="card role" style="--c:var(--violet)"><div class="tag">Science</div><h3>Учёный</h3><ul><li>Видит научные цели и карты</li><li>Наводит приборы, копит данные</li><li>Выбирает, что отправлять первым</li><li>Перк: бонус за редкие находки</li></ul></div>
+    <div class="card role" style="--c:var(--cyan)"><div class="tag">Comms &amp; Nav</div><h3>Связист</h3><ul><li>Видит орбиты и окна связи</li><li>Выбирает ракету и орбиту</li><li>Ведёт антенны DSN</li><li>Перк: видит события на 5 с раньше</li></ul></div>
+  </div>
+  <div class="grid3">
+    <div class="card"><div class="tag">Масштаб</div><h3>1, 2, 3 или 4 игрока</h3><p>Соло: дроид БИП-7 держит пустые станции на «авто» с упрощённой логикой. Вдвоём: каждый берёт по две роли. Сложность событий растёт с числом игроков.</p></div>
+    <div class="card"><div class="tag">Переговоры</div><h3>Общий кошелёк</h3><p>Бюджет один на всех. Учёный хочет второй прибор, Инженер — запасную батарею. Командир запускает голосование: 4 голограммы над столом, 10 секунд.</p></div>
+    <div class="card"><div class="tag">Синхронность</div><h3>Действия «в одну секунду»</h3><p>Раскрытие зеркала, стыковка, манёвр уклонения: несколько игроков нажимают свои рычаги одновременно. Удачная синхронизация даёт очки «Команда».</p></div>
+  </div>
+  <figure class="sketch"><div class="svgbox">
+  <svg viewBox="0 0 960 230" role="img" aria-label="Пример асимметричной информации в миссии M2">
+    <rect x="0" y="0" width="960" height="230" rx="10" class="fbg"/>
+    <text x="30" y="34" class="ta">Пример: M2, найти лёд в кратерах</text>
+    <rect x="30" y="54" width="260" height="150" rx="10" class="box" style="stroke:#A98BFF"/>
+    <text x="45" y="78" class="t" style="fill:#A98BFF;font-weight:700">Экран Учёного</text>
+    <circle cx="110" cy="140" r="34" fill="#1A1F42"/><circle cx="100" cy="132" r="12" fill="#5BD6FF" opacity=".7"/><circle cx="128" cy="152" r="8" fill="#5BD6FF" opacity=".5"/>
+    <text x="160" y="126" class="td">синие пятна =</text><text x="160" y="142" class="td">−230 °C, вечная тень</text><text x="160" y="158" class="td">только у полюса</text>
+    <rect x="350" y="54" width="260" height="150" rx="10" class="box" style="stroke:#5BD6FF"/>
+    <text x="365" y="78" class="tc">Экран Связиста</text>
+    <circle cx="430" cy="140" r="34" class="ln"/><ellipse cx="430" cy="140" rx="50" ry="14" class="hc"/><ellipse cx="430" cy="140" rx="14" ry="50" class="hl"/>
+    <text x="490" y="126" class="td">экваториальная</text><text x="490" y="142" class="td" style="fill:#FFB547">или полярная?</text><text x="490" y="158" class="td">цели не видны</text>
+    <rect x="670" y="54" width="260" height="150" rx="10" class="box2"/>
+    <text x="685" y="78" class="t">Голос / чат</text>
+    <text x="685" y="106" class="td" style="fill:#A98BFF">У: «лёд у самого полюса!»</text>
+    <text x="685" y="128" class="td" style="fill:#5BD6FF">С: «тогда полярная, но</text>
+    <text x="685" y="144" class="td" style="fill:#5BD6FF">ракета нужна сильнее»</text>
+    <text x="685" y="166" class="td" style="fill:#FFB547">К: «беру из резерва, голосуем»</text>
+    <path d="M290 130 H346 M610 130 H666" class="arrow"/>
+  </svg></div></figure>
+</section>
+
+<!-- ============ MECHANICS ============ -->
+<section id="mechanics">
+  <div><div class="eyebrow">Механики</div><h2>Что берём из популярных игр Roblox и геймдева</h2>
+  <p class="lead">Каждая механика уже знакома подросткам, поэтому её не нужно объяснять. Мы только наполняем её смыслом инженерии миссий.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Механика</th><th>Откуда знакома</th><th>У нас</th><th>Чему учит</th></tr></thead>
+    <tbody>
+      <tr><td><b>Собери и испытай</b></td><td>Build a Boat for Treasure (Roblox)</td><td>Корабль собирается руками в ангаре, потом летит, и всё видно</td><td>Система — это сумма компромиссов</td></tr>
+      <tr><td><b>Станции на одном корабле</b></td><td>Overcooked, Lovers in a Dangerous Spacetime</td><td>4 консоли в Центре управления, хаос событий</td><td>Командная работа, как в настоящем ЦУПе</td></tr>
+      <tr><td><b>Распределение энергии</b></td><td>FTL: Faster Than Light</td><td>Ячейки энергии между системами, тень орбиты</td><td>Бюджет мощности, батареи, затмения</td></tr>
+      <tr><td><b>Асимметричная информация</b></td><td>Keep Talking and Nobody Explodes</td><td>У каждой роли свой кусок данных</td><td>Коммуникация между дисциплинами</td></tr>
+      <tr><td><b>Путешествие с событиями</b></td><td>Dead Rails, 99 Nights in the Forest (Roblox)</td><td>Операции миссии — путь с картами событий и нарастающей угрозой</td><td>Риски и надёжность</td></tr>
+      <tr><td><b>Коллекция с редкостью</b></td><td>Grow a Garden, Pet Simulator (Roblox)</td><td>Ядра памяти Архива: обычные, редкие, легендарные (Voyager, JWST)</td><td>Реальная история NASA</td></tr>
+      <tr><td><b>Роли с перками</b></td><td>Doors, Dead by Daylight, классовые шутеры</td><td>4 роли, у каждой свой бонус и косметика</td><td>Специализация инженеров</td></tr>
+      <tr><td><b>Звёзды и пересборка</b></td><td>Angry Birds, Cut the Rope</td><td>1–3 звезды, быстрый ретрай, разные решения</td><td>Нет единственного верного ответа</td></tr>
+      <tr><td><b>Паркур и мобильность</b></td><td>Obby, Tower of Hell (Roblox)</td><td>Зеро-G тренажёр в хабе, реактивный ранец</td><td>Невесомость, инерция (без текста)</td></tr>
+      <tr><td><b>Ранги и косметика</b></td><td>Battle pass, бейджи Roblox</td><td>Ранги = уровни зрелости концепта JPL (CML 1–4), шлемы, раскраска корабля</td><td>Как идея становится проектом</td></tr>
+      <tr><td><b>Выбор с последствиями</b></td><td>Telltale, Undertale</td><td>Деталь Векса в финале, две концовки</td><td>Цена «срезания углов»</td></tr>
+      <tr><td><b>Живой мир</b></td><td>Сезонные события Grow a Garden</td><td>Реальная космическая погода NASA DONKI меняет события дня</td><td>Космическая погода существует сейчас</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============ UX ============ -->
+<section id="ux">
+  <div><div class="eyebrow">Меньше текста, больше картинки</div><h2>Правила интерфейса</h2></div>
+  <div class="grid2">
+    <div class="card"><h3>Шесть иконок вместо слов</h3>
+      <div class="icons">
+        <span class="ic" style="--c:var(--warn)"><i>kg</i>Масса</span>
+        <span class="ic" style="--c:var(--amber)"><i>⚡</i>Питание</span>
+        <span class="ic" style="--c:var(--ok)"><i>₵</i>Бюджет</span>
+        <span class="ic" style="--c:var(--violet)"><i>▣</i>Данные</span>
+        <span class="ic" style="--c:var(--cyan)"><i>⌁</i>Связь</span>
+        <span class="ic" style="--c:var(--dim)"><i>⏳</i>Время</span>
+      </div>
+      <p>Цвет состояния везде один: зелёный — норма, жёлтый — запас меньше 10%, красный — превышение (пульсирует).</p></div>
+    <div class="card"><h3>Жёсткие лимиты на текст</h3><ul>
+      <li>Не больше 7 слов на одной плашке</li>
+      <li>Брифинг: голограмма + 1 фраза + картинка цели, до 10 секунд</li>
+      <li>Обучение действием: БИП-7 подлетает и подсвечивает, что нажать</li>
+      <li>Факт NASA: 1 строка + 3D-модель в Архиве, по желанию</li>
+      <li>Последствия показываются стрелками и анимацией, а не текстом</li>
+      <li>Субтитры и короткие голосовые реплики (озвучка — P2)</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ DATA ============ -->
+<section id="data">
+  <div><div class="eyebrow">Данные NASA</div><h2>Откуда берутся цифры в игре</h2>
+  <p class="lead">Критерий Relevance требует, чтобы данные NASA были ядром, а не украшением. У нас из них сделаны параметры модулей, ракет и орбит, события и финальный разбор.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Источник NASA</th><th>Что берём</th><th>Где в игре</th></tr></thead>
+    <tbody>
+      <tr><td>Design and Develop Science Missions (S3VI)</td><td>Сегменты: запуск, космос, наземный, пользователи</td><td>Структура цикла и 4 роли</td></tr>
+      <tr><td>Concept Maturity Levels (JPL)</td><td>Уровни CML 1–4</td><td>Ранги кадетов</td></tr>
+      <tr><td>Mission Design Lab (Goddard)</td><td>Подсистемы: питание, тепло, связь, ориентация, надёжность</td><td>Типы модулей в ангаре</td></tr>
+      <tr><td>CubeSat 101 (CSLI)</td><td>Размеры 1U–6U, правило запаса</td><td>Пролог M0, жёлтая зона шкал</td></tr>
+      <tr><td>GMAT, NASA Mission Viz</td><td>Орбиты, переходы, гравманёвры (упрощённо)</td><td>Таблица орбит, ссылка «узнать больше»</td></tr>
+      <tr><td>A Learning Game About Telescopes (Webb)</td><td>Цель → длина волны → прибор</td><td>Логика выбора приборов в M4</td></tr>
+      <tr><td><b>api.nasa.gov · DONKI</b> (живой API)</td><td>Вспышки и выбросы корональной массы за последние 30 дней</td><td>Солнечные бури в событиях и в финале</td></tr>
+      <tr><td><b>api.nasa.gov · NeoWs</b> (живой API)</td><td>Реальные сближающиеся астероиды</td><td>Цели миссии «Молот», доска угроз в хабе</td></tr>
+      <tr><td>Страницы миссий NASA</td><td>LRO, LCROSS, Perseverance, JWST, Europa Clipper, Juno, DART, Opportunity, Voyager</td><td>Сюжеты миссий, Ядра памяти, подсказки в разборе</td></tr>
+      <tr><td>NASA 3D Resources, Scientific Visualization Studio</td><td>3D-модели аппаратов, текстуры Луны, Земли, Марса</td><td>Архив, небо, планеты</td></tr>
+    </tbody>
+  </table></div>
+  <div class="panel" style="display:grid;gap:8px"><h3>Упрощённая, но честная физика</h3>
+  <dl class="kv">
+    <dt>Солнечная энергия</dt><dd>Мощность панели ∝ 1/r². У Марса ~43% от земной, у Юпитера ~4%</dd>
+    <dt>Проверка ракеты</dt><dd>Масса корабля ≤ грузоподъёмность ракеты для выбранной орбиты (для GEO и дальнего космоса меньше, чем для LEO)</dd>
+    <dt>Связь</dt><dd>Скорость данных падает с расстоянием, задержка = расстояние / скорость света</dd>
+    <dt>Тень</dt><dd>На низкой орбите часть каждого витка в тени: работают только батареи</dd>
+    <dt>Запас</dt><dd>Меньше 10% запаса по массе или мощности → у события есть шанс «сломать» систему</dd>
+  </dl></div>
+</section>
+
+<!-- ============ VISUAL ============ -->
+<section id="visual">
+  <div><div class="eyebrow">Визуал</div><h2>Как выжать из Roblox максимум картинки</h2></div>
+  <div class="grid3">
+    <div class="card"><div class="tag">Свет и пост-эффекты</div><ul>
+      <li>Lighting.Technology = Future</li>
+      <li>Atmosphere, Bloom, ColorCorrection, SunRays, DepthOfField</li>
+      <li>Неоновые полосы (Neon) как навигация по хабу</li>
+      <li>Скайбокс из снимков NASA</li>
+      <li>Голограммы: прозрачность + Beam + ParticleEmitter</li>
+    </ul></div>
+    <div class="card"><div class="tag">Материалы и модели</div><ul>
+      <li>PBR через SurfaceAppearance</li>
+      <li>Модели аппаратов из NASA 3D Resources (Архив)</li>
+      <li>Генерация мешей и материалов встроенным ИИ Studio (generate_mesh, generate_material)</li>
+      <li>Kenney Space Kit, Poly Haven (CC0)</li>
+      <li>Creator Store: только меши, без чужих скриптов</li>
+    </ul></div>
+    <div class="card"><div class="tag">Кинематографичность</div><ul>
+      <li>Камера-катсцены через TweenService на старте и посадке</li>
+      <li>Переход между миссиями: «прыжок» со звёздными линиями</li>
+      <li>Тряска камеры на запуске, звук нарастает</li>
+      <li>Аудио: лицензированная библиотека Roblox</li>
+      <li>Титры с авторами всех ассетов в конце</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div><div class="eyebrow">Инструменты и скиллы</div><h2>Что я нашёл и чем буду пользоваться</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Инструмент</th><th>Что даёт</th><th>Статус</th></tr></thead>
+    <tbody>
+      <tr><td><b>Roblox Studio MCP server</b> (встроен в Studio, официальный)</td><td>Я сам строю карту, пишу Luau-скрипты, вставляю ассеты, генерирую меши и материалы, запускаю плейтест, делаю скриншоты и хожу персонажем</td><td><span class="pill p0">нужно включить</span></td></tr>
+      <tr><td>roblox-luau (gamedev-skills/awesome-gamedev-agent-skills, Apache-2.0)</td><td>Сервисы, Instances, безопасные RemoteEvents</td><td><span class="pill p1">поставлю после проверки</span></td></tr>
+      <tr><td>luau-best-practices (dig1t/skills)</td><td>Сервер решает всё, чистый код, утечки памяти</td><td><span class="pill p1">поставлю после проверки</span></td></tr>
+      <tr><td>roblox-brain (TabooHarmony, 28 скиллов)</td><td>DataStore, UI, архитектура проекта</td><td><span class="pill p2">по необходимости</span></td></tr>
+      <tr><td>roblox-game-skill (brockmartin)</td><td>Чек-листы и аудит готовой игры</td><td><span class="pill p2">для финальной проверки</span></td></tr>
+      <tr><td>Higgsfield (подключён)</td><td>Концепт-арты, 3D-модели, видео и музыка для трейлера на 30 секунд</td><td><span class="pill p2">готов</span></td></tr>
+      <tr><td>Figma (подключён)</td><td>Макеты HUD и экранов</td><td><span class="pill p2">готов</span></td></tr>
+      <tr><td>Slides, frontend-design, dataviz, deep-research</td><td>7 слайдов для сдачи, дизайн интерфейса, шкалы и графики разбора, исследования</td><td><span class="pill p2">готов</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="panel" style="display:grid;gap:6px"><h3>Включить Studio MCP (1 минута)</h3>
+    <p>Roblox Studio → панель <b>Assistant</b> → <b>…</b> → <b>Manage MCP Servers</b> → включить <b>Enable Studio as MCP server</b> → в <b>Quick connect</b> включить <b>Claude Code</b>. Затем перезапустить сессию Claude. Если Quick connect не находит, команда для Windows: <span class="mono">cmd.exe /c %LOCALAPPDATA%\Roblox\mcp.bat</span></p>
+    <p class="lead">Также в Game Settings → Security включить Allow HTTP Requests, чтобы игра получала живые данные NASA DONKI и NeoWs.</p>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section id="roadmap">
+  <div><div class="eyebrow">План сборки до дедлайна</div><h2>Четыре системы, потом миссии как данные</h2>
+  <p class="lead">Сдача: воскресенье 15 ноября, 23:59 по местному времени. Порядок построен так, чтобы в любой момент была играбельная версия.</p></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Этап</th><th>Что делаем</th><th>Результат</th><th>Приоритет</th></tr></thead>
+    <tbody>
+      <tr><td>Суббота, вечер</td><td>Хаб-коробка, ангар с модулями и шкалами, проверка ракеты, M0 «Искра»</td><td>Первые 5 минут игры</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Ночь — утро вс</td><td>Центр управления на 4 станции, энергия, события, разбор с цепочкой причин. M1 и M2</td><td>~25 минут кооп-игры</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>Воскресенье, день</td><td>M3–M6 как таблицы данных + уникальная мини-игра каждой (посадка, раскрытие, DSN, финал). Живой API DONKI</td><td>~70 минут, полная кампания</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td>Воскресенье, вечер</td><td>Свет и полировка, катсцены, титры, трейлер 30 с, 7 слайдов, страница проекта на английском</td><td>Готово к сдаче</td><td><span class="pill p0">P0</span></td></tr>
+      <tr><td>После хакатона</td><td>Озвучка, лидерборд, песочница, соревновательный режим, сравнение проектов</td><td>Публичный запуск в Roblox</td><td><span class="pill p2">P2</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>
+  <div class="eyebrow">Источники</div>
+  <span>Текст трека и ресурсы: <a href="https://www.spaceappschallenge.org/2026/challenges/space-mission-design-game/">spaceappschallenge.org/2026/challenges/space-mission-design-game</a></span>
+  <span>Критерии и награды: <a href="https://www.spaceappschallenge.org/resources/judging-awards-guide/">spaceappschallenge.org/resources/judging-awards-guide</a></span>
+  <span>Roblox Studio MCP: <a href="https://create.roblox.com/docs/studio/mcp">create.roblox.com/docs/studio/mcp</a></span>
+  <span>Права в Roblox: <a href="https://create.roblox.com/docs/production/publishing/dmca-guidelines">create.roblox.com/docs/production/publishing/dmca-guidelines</a></span>
+  <span>Скиллы: <a href="https://github.com/gamedev-skills/awesome-gamedev-agent-skills">gamedev-skills/awesome-gamedev-agent-skills</a> · <a href="https://github.com/brockmartin/roblox-game-skill">brockmartin/roblox-game-skill</a> · TabooHarmony/roblox-brain · dig1t/skills</span>
+  <span>Эскизы — черновики для команды. Числа в игре упрощены, чтобы учить компромиссам, а не заменять инженерные инструменты. Проект не одобрен NASA.</span>
+</footer>
+</div>
