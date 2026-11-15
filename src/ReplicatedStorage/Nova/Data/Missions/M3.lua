@@ -1,0 +1,52 @@
+-- M3 "Seven Minutes of Terror": land on the red planet (Perseverance EDL, 2021).
+-- Signal takes minutes: the landing sequence is programmed in advance (sequence event).
+return {
+	id = "M3", order = 3,
+	titleKey = "m3_title", briefKey = "m3_brief",
+	dialogue = { { who = "kade", key = "d_m3_1" }, { who = "bip", key = "d_m3_2" } },
+	frame = "probe", orbit = "MARS", orbits = { "MARS" },
+	rockets = { "condor", "titan" },
+	budget = 380, buildTimeSec = 420, marginRule = 0.10,
+	core = { key = "core_m3", rarity = "rare" },
+	racks = {
+		{ category = "computer", ids = { "obc", "obc_hard" } },
+		{ category = "battery", labelKey = "cat_power", ids = { "battery_xl", "rtg" } },
+		{ category = "panel", ids = { "panel_wing", "panel_array" } },
+		{ category = "antenna", ids = { "antenna_s", "hga" } },
+		{ category = "edl", ids = { "edl_kit", "edl_crane" } },
+	},
+	tasks = {
+		{ id = "edl", key = "t_edl", icon = "target", cond = { cat = "edl" } },
+		{ id = "computer", key = "t_computer", icon = "computer", cond = { cat = "computer" } },
+		{ id = "power", key = "t_power_mars", icon = "power", cond = { notRed = "power" } },
+		{ id = "link", key = "t_link", icon = "comms", cond = { notRed = "comms" } },
+		{ id = "launch", key = "t_launch", icon = "rocket", cond = { launched = true } },
+		{ id = "land", key = "t_land", icon = "check", cond = { event = "edl" } },
+	},
+	recovery = {
+		computer = { key = "rt_computer", icon = "computer", cond = { cat = "computer" } },
+		edl = { key = "rt_edl", icon = "target", cond = { cat = "edl", rehearse = "edl" } },
+		dust = { key = "rt_dust", icon = "power", cond = { flag = "rtg" } },
+		margin = { key = "rt_margin", icon = "warning", cond = { green = { "mass", "power", "comms" } } },
+		comms = { key = "rt_comms", icon = "comms", cond = { notRed = "comms" } },
+		budget = { key = "rt_budget", icon = "budget", cond = { notRed = "budget" } },
+		time = { key = "rt_time", icon = "time", cond = { notRed = "time" } },
+	},
+	events = {
+		{ id = "cruise", icon = "orbit", check = "computer", okKey = "ev_cruise", failKey = "ev_nobrain" },
+		{ id = "edl", icon = "target", check = "edl", objective = true, okKey = "ev_edl_ok", failKey = "ev_edl_fail",
+			interactive = { kind = "sequence", consoles = { "EngineerConsole", "CommanderConsole", "ScientistConsole", "AntennaConsole" }, timeout = 40, waitKey = "ev_edl_wait" } },
+		{ id = "dust", icon = "shadow", check = "dust", okKey = "ev_dust_ok", failKey = "ev_dust_fail" },
+		{ id = "contact", icon = "comms", check = "comms", okKey = "ev_mars_contact", failKey = "ev_contact_fail" },
+	},
+	hints = {
+		computer = { key = "hint_computer", nasa = "nasa_cubesat_silent" },
+		edl = { key = "hint_edl", nasa = "nasa_percy" },
+		dust = { key = "hint_dust", nasa = "nasa_opportunity" },
+		margin = { key = "hint_margin", nasa = "nasa_cubesat101" },
+		comms = { key = "hint_delay", nasa = "nasa_percy" },
+		budget = { key = "hint_budget", nasa = "nasa_percy" },
+		time = { key = "hint_window_mars", nasa = "nasa_percy" },
+		success = { key = "hint_rtg", nasa = "nasa_percy" },
+	},
+}

@@ -1,0 +1,52 @@
+-- M6 "Hammer": deflect an asteroid before it hits the colony (DART 2022), under a solar storm.
+-- Vex offers a cheap part with a hidden risk. The choice changes the ending.
+return {
+	id = "M6", order = 6, final = true,
+	titleKey = "m6_title", briefKey = "m6_brief",
+	dialogue = { { who = "kade", key = "d_m6_1" }, { who = "vex", key = "d_m6_2" }, { who = "bip", key = "d_m6_3" } },
+	frame = "probe", orbit = "ASTEROID", orbits = { "ASTEROID", "ASTEROID_EARLY" },
+	rockets = { "condor", "titan" },
+	budget = 420, buildTimeSec = 420, marginRule = 0.10,
+	core = { key = "core_m6", rarity = "legendary" },
+	racks = {
+		{ category = "computer", ids = { "obc", "vex_unit" } },
+		{ category = "battery", ids = { "battery_l", "battery_xl" } },
+		{ category = "panel", ids = { "panel_wing", "panel_array" } },
+		{ category = "antenna", ids = { "antenna_s", "hga" } },
+		{ category = "payload", ids = { "impactor_s", "impactor_l" } },
+	},
+	tasks = {
+		{ id = "impactor", key = "t_impactor", icon = "target", cond = { cat = "payload" } },
+		{ id = "timing", key = "t_timing", icon = "time", cond = { chooseOrbit = true } },
+		{ id = "computer", key = "t_computer", icon = "computer", cond = { cat = "computer" } },
+		{ id = "link", key = "t_link", icon = "comms", cond = { notRed = "comms" } },
+		{ id = "launch", key = "t_launch", icon = "rocket", cond = { launched = true } },
+		{ id = "impact", key = "t_impact", icon = "spark", cond = { event = "impact" } },
+	},
+	recovery = {
+		computer = { key = "rt_computer", icon = "computer", cond = { cat = "computer" } },
+		storm = { key = "rt_storm", icon = "flare", cond = { noFlag = "vex", rehearse = "storm" } },
+		impact = { key = "rt_impact", icon = "target", cond = { pushEnough = true } },
+		margin = { key = "rt_margin", icon = "warning", cond = { green = { "mass", "power", "comms" } } },
+		comms = { key = "rt_comms", icon = "comms", cond = { notRed = "comms" } },
+		budget = { key = "rt_budget", icon = "budget", cond = { notRed = "budget" } },
+		time = { key = "rt_time", icon = "time", cond = { notRed = "time" } },
+	},
+	events = {
+		{ id = "cruise", icon = "orbit", check = "computer", okKey = "ev_cruise", failKey = "ev_nobrain" },
+		{ id = "storm", icon = "flare", check = "storm", okKey = "ev_storm_ok", failKey = "ev_storm_fail",
+			interactive = { kind = "sync", consoles = { "CommanderConsole", "EngineerConsole", "ScientistConsole", "AntennaConsole" }, window = 2.0, timeout = 35, waitKey = "ev_storm_wait" } },
+		{ id = "contact", icon = "comms", check = "comms", okKey = "ev_contact_ok", failKey = "ev_contact_fail" },
+		{ id = "impact", icon = "spark", check = "impact", objective = true, okKey = "ev_impact_ok", failKey = "ev_impact_fail" },
+	},
+	hints = {
+		computer = { key = "hint_computer", nasa = "nasa_cubesat_silent" },
+		storm = { key = "hint_vex", nasa = "nasa_donki" },
+		impact = { key = "hint_push", nasa = "nasa_dart" },
+		margin = { key = "hint_margin", nasa = "nasa_cubesat101" },
+		comms = { key = "hint_comms", nasa = "nasa_dart" },
+		budget = { key = "hint_budget", nasa = "nasa_dart" },
+		time = { key = "hint_early", nasa = "nasa_dart" },
+		success = { key = "hint_final", nasa = "nasa_dart" },
+	},
+}
