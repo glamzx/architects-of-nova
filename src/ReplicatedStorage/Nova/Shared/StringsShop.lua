@@ -1,0 +1,80 @@
+-- StringsShop: spacesuit outfitter (NovaClient.Outfitter, ProgressService). Entries:  key = { "русский", "English" }.
+local P = {
+	-- panel
+	of_title = { "Скафандр", "Spacesuit" },
+	of_sub = { "Собери свой скафандр перед полётом", "Build your spacesuit before launch" },
+	of_menu = { "Скафандр", "Spacesuit" },
+	of_menu_d = { "Цвет, шлем, визор и нашивка", "Color, helmet, visor and patch" },
+	of_credits = { "Кредиты", "Credits" },
+	of_tab_suit = { "Цвет", "Color" },
+	of_tab_helmet = { "Шлем", "Helmet" },
+	of_tab_visor = { "Визор", "Visor" },
+	of_tab_patch = { "Нашивка", "Patch" },
+	of_preview = { "Примерка", "Try-on" },
+	of_mode_base = { "В базе", "In base" },
+	of_mode_space = { "В космосе", "In space" },
+	of_drag = { "Крути мышкой или пальцем", "Drag to turn" },
+	of_buy = { "Купить", "Buy" },
+	of_equip = { "Надеть", "Put on" },
+	of_equipped = { "Надето", "Wearing" },
+	of_owned = { "Есть", "Owned" },
+	of_free = { "Бесплатно", "Free" },
+	of_need = { "Не хватает %d ₵", "Need %d more ₵" },
+	of_earn = { "Кредиты дают за миссии, задания дня и викторины", "Earn credits in missions, daily tasks and quizzes" },
+	of_bought = { "Куплено и надето!", "Bought and suited up!" },
+	of_worn = { "Надето!", "Suited up!" },
+	of_reset = { "Сброс", "Reset" },
+	of_error = { "Не получилось. Попробуй ещё раз", "That didn't work. Try again" },
+	of_esc = { "Esc — закрыть", "Esc to close" },
+
+	-- suit colours
+	of_suit_white = { "Белый", "White" },
+	of_suit_white_f = { "Белый цвет отражает солнце, и в скафандре не жарко.", "White reflects sunlight, so the suit stays cool." },
+	of_suit_amber = { "Оранжевый НАСА", "NASA orange" },
+	of_suit_amber_f = { "Яркий оранжевый легко заметить, если капсула сядет в океан.", "Bright orange is easy to spot if a capsule lands in the ocean." },
+	of_suit_mint = { "Мятный", "Mint" },
+	of_suit_mint_f = { "С МКС полярное сияние видно зелёным, почти мятным.", "From the ISS, auroras look green, almost mint." },
+	of_suit_cobalt = { "Кобальтовый", "Cobalt blue" },
+	of_suit_cobalt_f = { "В синих комбинезонах астронавты тренируются на Земле.", "Astronauts wear blue flight suits to train on Earth." },
+	of_suit_red = { "Сигнальный красный", "Signal red" },
+	of_suit_red_f = { "В открытом космосе у одного астронавта красные полосы, чтобы его не перепутать.", "On spacewalks one astronaut wears red stripes so the crew can tell them apart." },
+	of_suit_black = { "Графит", "Graphite" },
+	of_suit_black_f = { "Космос чёрный, потому что там нет воздуха, который рассеивает свет.", "Space looks black because there is no air to scatter the light." },
+	of_suit_silver = { "Серебро", "Silver" },
+	of_suit_silver_f = { "Первые астронавты программы «Меркурий» летали в серебристых скафандрах.", "The first Mercury astronauts flew in silver spacesuits." },
+	of_suit_gold = { "Золото", "Gold" },
+	of_suit_gold_f = { "Золото отражает тепло: им покрыты зеркала телескопа «Джеймс Уэбб».", "Gold reflects heat: it coats the mirrors of the James Webb telescope." },
+
+	-- helmets
+	of_helmet_bubble = { "Пузырь", "Bubble" },
+	of_helmet_bubble_f = { "Прозрачный шлем: всем видно твоё лицо.", "A clear helmet: everyone can see your face." },
+	of_helmet_eva = { "Выход в космос", "Spacewalk" },
+	of_helmet_eva_f = { "Золотой светофильтр защищает глаза от яркого Солнца.", "The gold visor protects your eyes from the bright Sun." },
+	of_helmet_sport = { "Спорт", "Sport" },
+	of_helmet_sport_f = { "Лёгкий шлем с полосой — для полёта в капсуле.", "A light striped helmet for the ride in the capsule." },
+	of_helmet_pro = { "Профи", "Pro" },
+	of_helmet_pro_f = { "Фонари и камера — как на шлемах астронавтов МКС.", "Lamps and a camera, like real ISS spacewalk helmets." },
+
+	-- visor tints
+	of_visor_std = { "Обычный", "Standard" },
+	of_visor_std_f = { "У каждого шлема своё родное стекло.", "Each helmet keeps its own glass." },
+	of_visor_teal = { "Лёд", "Ice" },
+	of_visor_teal_f = { "Голубое стекло — как лёд на спутнике Европа.", "Blue glass, like the ice on the moon Europa." },
+	of_visor_gold = { "Золото", "Gold" },
+	of_visor_gold_f = { "Тонкий слой золота не пускает к глазам жар и яркий свет.", "A thin layer of gold keeps out heat and glare." },
+	of_visor_mirror = { "Зеркало", "Mirror" },
+	of_visor_mirror_f = { "Зеркальное стекло отражает Солнце, как вода.", "A mirror visor reflects the Sun like water." },
+
+	-- shoulder patches
+	of_patch_blue = { "Синяя", "Blue" },
+	of_patch_blue_f = { "Каждый экипаж сам придумывает нашивку своей миссии.", "Every crew designs its own mission patch." },
+	of_patch_red = { "Красная", "Red" },
+	of_patch_red_f = { "Красная, как Марс — Красная планета.", "Red, like Mars, the Red Planet." },
+	of_patch_mint = { "Мятная", "Mint" },
+	of_patch_mint_f = { "Нашивки для скафандров делают из ткани, которая не горит.", "Spacesuit patches are made of cloth that does not burn." },
+	of_patch_gold = { "Золотая", "Gold" },
+	of_patch_gold_f = { "Золотая нашивка — для самых опытных экипажей.", "A gold patch for the most experienced crews." },
+}
+local out = { ru = {}, en = {} }
+for k, v in P do out.ru[k] = v[1] out.en[k] = v[2] end
+return out
